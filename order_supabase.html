@@ -1,0 +1,2444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ziyafat | Checkout</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root{
+
+    --gold:#c9a45c;
+    --gold-light:#e7c77f;
+
+    --dark:#090706;
+    --dark2:#100b08;
+    --brown:#1c130e;
+    --brown2:#281a13;
+
+    --cream:#f2e8d5;
+    --muted:#9e9182;
+
+    --border:rgba(201,164,92,.22);
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    background:
+
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(201,164,92,.07),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(201,164,92,.04),
+            transparent 30%
+        ),
+
+        var(--dark);
+
+    color:var(--cream);
+
+    font-family:"DM Sans",sans-serif;
+
+    min-height:100vh;
+
+}
+
+
+button,
+input,
+textarea,
+select{
+
+    font-family:inherit;
+
+}
+
+
+a{
+
+    text-decoration:none;
+    color:inherit;
+
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    height:78px;
+
+    z-index:1000;
+
+    background:rgba(7,5,4,.95);
+
+    backdrop-filter:blur(16px);
+
+    border-bottom:
+        1px solid rgba(201,164,92,.15);
+
+}
+
+
+.nav-inner{
+
+    width:min(1250px,92%);
+
+    height:100%;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+}
+
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+
+.logo-symbol{
+
+    color:var(--gold-light);
+
+    font-size:27px;
+
+}
+
+
+.logo-text{
+
+    font-family:"Cinzel",serif;
+
+    font-size:21px;
+
+    letter-spacing:4px;
+
+    color:var(--gold-light);
+
+}
+
+
+.logo-sub{
+
+    display:block;
+
+    color:#907d68;
+
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    margin-top:-2px;
+
+}
+
+
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:30px;
+
+}
+
+
+.nav-links a{
+
+    font-size:12px;
+
+    letter-spacing:1.5px;
+
+    color:#c4b7a5;
+
+    transition:.3s;
+
+}
+
+
+.nav-links a:hover{
+
+    color:var(--gold-light);
+
+}
+
+
+.back-menu{
+
+    padding:12px 18px;
+
+    border:1px solid var(--gold);
+
+    color:var(--gold-light)!important;
+
+}
+
+
+.back-menu:hover{
+
+    background:var(--gold);
+
+    color:#100c09!important;
+
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+
+    padding-top:78px;
+
+    min-height:390px;
+
+    display:flex;
+
+    align-items:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(8,6,5,.96),
+            rgba(8,6,5,.65),
+            rgba(8,6,5,.8)
+        ),
+
+        url("https://images.mindtrip.ai/restaurants/e57c/3ed2/a9af/9273/9047/0dd4/c8e2/2c11")
+        center/cover no-repeat;
+
+}
+
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 60%,
+            var(--dark)
+        );
+
+}
+
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    width:min(1100px,92%);
+
+    margin:auto;
+
+}
+
+
+.hero-small{
+
+    color:var(--gold-light);
+
+    font-size:11px;
+
+    letter-spacing:5px;
+
+    margin-bottom:20px;
+
+}
+
+
+.hero h1{
+
+    font-family:"Cinzel",serif;
+
+    font-size:clamp(42px,7vw,72px);
+
+    font-weight:500;
+
+    line-height:1.1;
+
+}
+
+
+.hero h1 span{
+
+    color:var(--gold-light);
+
+}
+
+
+.hero p{
+
+    color:#b7a895;
+
+    max-width:560px;
+
+    line-height:1.8;
+
+    margin-top:20px;
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.checkout-section{
+
+    width:min(1150px,92%);
+
+    margin:0 auto;
+
+    padding:80px 0 120px;
+
+}
+
+
+.checkout-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1.35fr)
+        minmax(320px,.65fr);
+
+    gap:30px;
+
+}
+
+
+/* =====================================================
+   PANELS
+===================================================== */
+
+.panel{
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.025),
+            transparent
+        ),
+
+        #120c09;
+
+    border:1px solid var(--border);
+
+    padding:30px;
+
+}
+
+
+.panel-title{
+
+    font-family:"Cinzel",serif;
+
+    color:var(--gold-light);
+
+    font-size:25px;
+
+    font-weight:500;
+
+    margin-bottom:8px;
+
+}
+
+
+.panel-subtitle{
+
+    color:#817466;
+
+    font-size:12px;
+
+    line-height:1.7;
+
+    margin-bottom:28px;
+
+}
+
+
+/* =====================================================
+   ORDER ITEMS
+===================================================== */
+
+.order-item{
+
+    display:grid;
+
+    grid-template-columns:85px 1fr auto;
+
+    gap:16px;
+
+    padding:18px 0;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+
+}
+
+
+.order-item:first-child{
+
+    padding-top:0;
+
+}
+
+
+.order-image{
+
+    width:85px;
+
+    height:75px;
+
+    object-fit:cover;
+
+}
+
+
+.order-info{
+
+    min-width:0;
+
+}
+
+
+.order-name{
+
+    font-family:"Cinzel",serif;
+
+    color:#eadcc7;
+
+    font-size:15px;
+
+    margin-bottom:7px;
+
+}
+
+
+.order-price{
+
+    color:var(--gold-light);
+
+    font-size:12px;
+
+}
+
+
+.quantity{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    margin-top:12px;
+
+}
+
+
+.quantity button{
+
+    width:25px;
+
+    height:25px;
+
+    border:1px solid rgba(201,164,92,.35);
+
+    background:transparent;
+
+    color:var(--gold-light);
+
+    cursor:pointer;
+
+}
+
+
+.quantity span{
+
+    font-size:12px;
+
+    min-width:15px;
+
+    text-align:center;
+
+}
+
+
+.item-total{
+
+    color:var(--gold-light);
+
+    font-weight:600;
+
+    white-space:nowrap;
+
+}
+
+
+.remove{
+
+    display:block;
+
+    border:0;
+
+    background:none;
+
+    color:#74665a;
+
+    cursor:pointer;
+
+    font-size:10px;
+
+    margin-top:8px;
+
+}
+
+
+.remove:hover{
+
+    color:#c89579;
+
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty{
+
+    text-align:center;
+
+    padding:70px 20px;
+
+    color:#75685b;
+
+}
+
+
+.empty-icon{
+
+    font-size:45px;
+
+    margin-bottom:20px;
+
+}
+
+
+.empty h3{
+
+    font-family:"Cinzel",serif;
+
+    color:#b8a895;
+
+    font-weight:400;
+
+    margin-bottom:8px;
+
+}
+
+
+.empty a{
+
+    display:inline-block;
+
+    margin-top:22px;
+
+    padding:13px 22px;
+
+    border:1px solid var(--gold);
+
+    color:var(--gold-light);
+
+    font-size:11px;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+}
+
+
+/* =====================================================
+   ORDER TYPE
+===================================================== */
+
+.order-type{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+    margin-bottom:25px;
+
+}
+
+
+.order-type input{
+
+    display:none;
+
+}
+
+
+.order-type label{
+
+    padding:18px;
+
+    border:1px solid rgba(201,164,92,.2);
+
+    text-align:center;
+
+    color:#988979;
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    transition:.3s;
+
+}
+
+
+.order-type label:hover{
+
+    border-color:var(--gold);
+
+}
+
+
+.order-type input:checked + label{
+
+    background:
+        rgba(201,164,92,.1);
+
+    border-color:var(--gold);
+
+    color:var(--gold-light);
+
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form-group{
+
+    margin-bottom:18px;
+
+}
+
+
+.form-group label{
+
+    display:block;
+
+    color:#aa9b89;
+
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.5px;
+
+    margin-bottom:8px;
+
+}
+
+
+.form-group input,
+.form-group textarea{
+
+    width:100%;
+
+    background:#0b0806;
+
+    border:1px solid rgba(201,164,92,.18);
+
+    color:white;
+
+    padding:14px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+
+.form-group textarea{
+
+    min-height:90px;
+
+    resize:vertical;
+
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus{
+
+    border-color:var(--gold);
+
+    background:#0e0907;
+
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder{
+
+    color:#5f554c;
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.summary{
+
+    position:sticky;
+
+    top:100px;
+
+}
+
+
+.summary-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    color:#9f9283;
+
+    font-size:13px;
+
+    padding:11px 0;
+
+}
+
+
+.summary-row span:last-child{
+
+    color:#d1c1aa;
+
+}
+
+
+.summary-divider{
+
+    height:1px;
+
+    background:rgba(201,164,92,.16);
+
+    margin:12px 0;
+
+}
+
+
+.summary-total{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding-top:18px;
+
+}
+
+
+.summary-total span:first-child{
+
+    font-family:"Cinzel",serif;
+
+    font-size:18px;
+
+    color:#e5d6c0;
+
+}
+
+
+.summary-total span:last-child{
+
+    color:var(--gold-light);
+
+    font-size:22px;
+
+    font-weight:600;
+
+}
+
+
+/* =====================================================
+   PLACE ORDER BUTTON
+===================================================== */
+
+.place-order{
+
+    width:100%;
+
+    border:0;
+
+    background:var(--gold);
+
+    color:#0d0906;
+
+    padding:17px;
+
+    margin-top:25px;
+
+    font-weight:700;
+
+    font-size:11px;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+.place-order:hover{
+
+    background:var(--gold-light);
+
+    transform:translateY(-2px);
+
+}
+
+
+.secure{
+
+    text-align:center;
+
+    color:#62584f;
+
+    font-size:10px;
+
+    margin-top:15px;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+
+    background:#070504;
+
+    border-top:1px solid rgba(201,164,92,.15);
+
+    padding:60px 0 25px;
+
+}
+
+
+.footer-inner{
+
+    width:min(1150px,92%);
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:1.5fr 1fr 1fr;
+
+    gap:50px;
+
+}
+
+
+.footer-logo{
+
+    font-family:"Cinzel",serif;
+
+    color:var(--gold-light);
+
+    letter-spacing:5px;
+
+    font-size:24px;
+
+}
+
+
+.footer-description{
+
+    color:#74685d;
+
+    font-size:13px;
+
+    line-height:1.8;
+
+    margin-top:15px;
+
+    max-width:340px;
+
+}
+
+
+.footer-title{
+
+    color:var(--gold-light);
+
+    font-size:11px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    margin-bottom:18px;
+
+}
+
+
+.footer-links{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+
+.footer-links a{
+
+    color:#766a5e;
+
+    font-size:12px;
+
+}
+
+
+.footer-links a:hover{
+
+    color:var(--gold-light);
+
+}
+
+
+.footer-bottom{
+
+    width:min(1150px,92%);
+
+    margin:45px auto 0;
+
+    padding-top:20px;
+
+    border-top:1px solid rgba(255,255,255,.06);
+
+    color:#514940;
+
+    font-size:10px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+}
+
+
+/* =====================================================
+   SUCCESS MODAL
+===================================================== */
+
+.success-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:5000;
+
+    background:rgba(0,0,0,.82);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+}
+
+
+.success-overlay.show{
+
+    display:flex;
+
+}
+
+
+.success-box{
+
+    width:min(500px,100%);
+
+    background:#120c09;
+
+    border:1px solid var(--gold);
+
+    padding:45px 30px;
+
+    text-align:center;
+
+}
+
+
+.success-icon{
+
+    width:70px;
+
+    height:70px;
+
+    margin:0 auto 20px;
+
+    border:1px solid var(--gold);
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:var(--gold-light);
+
+    font-size:28px;
+
+}
+
+
+.success-box h2{
+
+    font-family:"Cinzel",serif;
+
+    color:var(--gold-light);
+
+    font-weight:500;
+
+    margin-bottom:12px;
+
+}
+
+
+.success-box p{
+
+    color:#8f8172;
+
+    line-height:1.8;
+
+    font-size:13px;
+
+}
+
+
+.success-close{
+
+    margin-top:25px;
+
+    padding:13px 25px;
+
+    background:var(--gold);
+
+    color:#100c09;
+
+    border:0;
+
+    cursor:pointer;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:850px){
+
+    .nav-links{
+
+        display:none;
+
+    }
+
+
+    .checkout-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .summary{
+
+        position:static;
+
+    }
+
+
+    .footer-inner{
+
+        grid-template-columns:1fr 1fr;
+
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .navbar{
+
+        height:68px;
+
+    }
+
+
+    .hero{
+
+        padding-top:68px;
+
+        min-height:330px;
+
+    }
+
+
+    .logo-text{
+
+        font-size:17px;
+
+    }
+
+
+    .logo-symbol{
+
+        font-size:21px;
+
+    }
+
+
+    .checkout-section{
+
+        padding:55px 0 80px;
+
+    }
+
+
+    .panel{
+
+        padding:22px;
+
+    }
+
+
+    .order-item{
+
+        grid-template-columns:70px 1fr;
+
+    }
+
+
+    .order-image{
+
+        width:70px;
+
+        height:65px;
+
+    }
+
+
+    .item-total{
+
+        grid-column:2;
+
+    }
+
+
+    .footer-inner{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .footer-bottom{
+
+        flex-direction:column;
+
+        gap:10px;
+
+    }
+
+}
+
+</style>
+
+    <!-- Supabase JavaScript client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <div class="nav-inner">
+
+        <a href="index.html" class="logo">
+
+            <div class="logo-symbol">♛</div>
+
+            <div>
+
+                <div class="logo-text">
+                    ZIYAFAT
+                </div>
+
+                <span class="logo-sub">
+                    RESTAURANT
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                HOME
+            </a>
+
+            <a href="menu.html">
+                MENU
+            </a>
+
+            <a href="index.html#about">
+                OUR STORY
+            </a>
+
+            <a href="index.html#gallery">
+                GALLERY
+            </a>
+
+            <a href="index.html#contact">
+                CONTACT
+            </a>
+
+            <a href="menu.html" class="back-menu">
+                ← BACK TO MENU
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-small">
+            ZIYAFAT RESTAURANT · KABUL
+        </div>
+
+        <h1>
+            Complete Your
+            <span>Order</span>
+        </h1>
+
+        <p>
+            Your table, your home, or your celebration —
+            let Ziyafat bring the authentic taste of Afghan
+            hospitality to you.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CHECKOUT
+===================================================== -->
+
+<section class="checkout-section">
+
+    <div class="checkout-grid">
+
+
+        <!-- ============================================
+             CUSTOMER INFORMATION
+        ============================================= -->
+
+        <div class="panel">
+
+            <h2 class="panel-title">
+                Your Information
+            </h2>
+
+            <p class="panel-subtitle">
+                Please provide your details so our team
+                can prepare your order.
+            </p>
+
+
+            <!-- ORDER TYPE -->
+
+            <div class="order-type">
+
+                <input
+                    type="radio"
+                    name="orderType"
+                    id="delivery"
+                    value="Delivery"
+                    checked
+                >
+
+                <label for="delivery">
+                    🚗 &nbsp; Delivery
+                </label>
+
+
+                <input
+                    type="radio"
+                    name="orderType"
+                    id="takeaway"
+                    value="Takeaway"
+                >
+
+                <label for="takeaway">
+                    🥡 &nbsp; Takeaway
+                </label>
+
+            </div>
+
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+                <label for="customerName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Your full name"
+                >
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+                <label for="customerPhone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="customerPhone"
+                    placeholder="07X XXX XXXX"
+                >
+
+            </div>
+
+
+            <!-- ADDRESS -->
+
+            <div
+                class="form-group"
+                id="addressGroup"
+            >
+
+                <label for="customerAddress">
+                    Delivery Address
+                </label>
+
+                <textarea
+                    id="customerAddress"
+                    placeholder="Enter your complete delivery address"
+                ></textarea>
+
+            </div>
+
+
+            <!-- NOTES -->
+
+            <div class="form-group">
+
+                <label for="customerNotes">
+                    Special Instructions
+                </label>
+
+                <textarea
+                    id="customerNotes"
+                    placeholder="Any special requests for your order?"
+                ></textarea>
+
+            </div>
+
+
+            <!-- PAYMENT -->
+
+            <div class="form-group">
+
+                <label for="paymentMethod">
+                    Payment Method
+                </label>
+
+                <select
+                    id="paymentMethod"
+                    style="
+                    width:100%;
+                    background:#0b0806;
+                    border:1px solid rgba(201,164,92,.18);
+                    color:#fff;
+                    padding:14px;
+                    outline:none;
+                    "
+                >
+
+                    <option value="Cash on Delivery">
+                        Cash on Delivery
+                    </option>
+
+                    <option value="Pay at Restaurant">
+                        Pay at Restaurant
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ORDER ITEMS -->
+
+            <div style="
+                margin-top:40px;
+                padding-top:25px;
+                border-top:1px solid rgba(201,164,92,.15);
+            ">
+
+                <h2 class="panel-title">
+                    Your Items
+                </h2>
+
+                <p class="panel-subtitle">
+                    Review your selected dishes before placing your order.
+                </p>
+
+                <div id="orderItems">
+
+                    <!-- JavaScript inserts items here -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ============================================
+             SUMMARY
+        ============================================= -->
+
+        <div class="panel summary">
+
+            <h2 class="panel-title">
+                Order Summary
+            </h2>
+
+            <p class="panel-subtitle">
+                A final look at your Ziyafat experience.
+            </p>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Items
+                </span>
+
+                <span id="summaryItems">
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span id="subtotal">
+                    AFN 0
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Delivery
+                </span>
+
+                <span id="deliveryFee">
+                    AFN 0
+                </span>
+
+            </div>
+
+
+            <div class="summary-row" id="discountRow" style="display:none;">
+
+                <span>
+                    Discount
+                </span>
+
+                <span id="discountAmount" style="color:var(--gold-light,#e0c17d);">
+                    -AFN 0
+                </span>
+
+            </div>
+
+
+            <div class="coupon-box" style="display:flex;gap:8px;margin:14px 0;">
+
+                <input
+                    type="text"
+                    id="couponInput"
+                    placeholder="Discount code"
+                    style="flex:1;padding:10px 12px;background:transparent;border:1px solid var(--border,rgba(201,164,92,.3));border-radius:6px;color:inherit;text-transform:uppercase;">
+
+                <button
+                    type="button"
+                    onclick="applyCoupon()"
+                    id="applyCouponBtn"
+                    style="padding:10px 16px;border:1px solid var(--gold,#c9a45c);background:transparent;color:var(--gold,#c9a45c);border-radius:6px;cursor:pointer;white-space:nowrap;">
+                    Apply
+                </button>
+
+            </div>
+
+            <div id="couponMessage" style="font-size:12px;margin:-6px 0 10px;min-height:14px;"></div>
+
+
+            <div class="summary-divider"></div>
+
+
+            <div class="summary-total">
+
+                <span>
+                    Total
+                </span>
+
+                <span id="grandTotal">
+                    AFN 0
+                </span>
+
+            </div>
+
+
+            <button
+                class="place-order"
+                onclick="placeOrder()"
+            >
+
+                Place Order & Send to WhatsApp
+
+            </button>
+
+
+            <div class="secure">
+                ✦ Your order will be sent directly to Ziyafat ✦
+            </div>
+
+
+            <!-- CONTACT -->
+
+            <div style="
+                margin-top:35px;
+                padding-top:25px;
+                border-top:1px solid rgba(201,164,92,.12);
+            ">
+
+                <div style="
+                    color:var(--gold-light);
+                    font-family:Cinzel,serif;
+                    font-size:15px;
+                    margin-bottom:12px;
+                ">
+                    Need Help?
+                </div>
+
+                <div style="
+                    color:#817467;
+                    font-size:12px;
+                    line-height:1.9;
+                ">
+
+                    Call Ziyafat Restaurant<br>
+
+                    <a
+                        href="tel:+93782322222"
+                        style="color:var(--gold-light);"
+                    >
+                        +93 782 322 222
+                    </a>
+
+                    <br><br>
+
+                    Open 24 hours
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-inner">
+
+
+        <div>
+
+            <div class="footer-logo">
+                ZIYAFAT
+            </div>
+
+            <p class="footer-description">
+                Authentic Taste of Afghan Hospitality.
+                We serve food, harmony, and laughter
+                in the heart of Kabul.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <div class="footer-title">
+                Explore
+            </div>
+
+            <div class="footer-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="menu.html">
+                    Menu
+                </a>
+
+                <a href="index.html#about">
+                    Our Story
+                </a>
+
+                <a href="index.html#gallery">
+                    Gallery
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <div class="footer-title">
+                Contact
+            </div>
+
+            <div class="footer-links">
+
+                <a href="#">
+                    City Mall, Share Naw Street
+                </a>
+
+                <a href="tel:+93782322222">
+                    +93 782 322 222
+                </a>
+
+                <a href="mailto:info@ziyafatrestaurants.com">
+                    info@ziyafatrestaurants.com
+                </a>
+
+                <a href="#">
+                    Open 24/7
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 Ziyafat Restaurant. All Rights Reserved.
+        </span>
+
+        <span>
+            Authentic Taste of Afghan Hospitality
+        </span>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     SUCCESS
+===================================================== -->
+
+<div
+    class="success-overlay"
+    id="successOverlay"
+>
+
+    <div class="success-box">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>
+            Order Ready
+        </h2>
+
+        <p>
+            Your order has been prepared and is ready
+            to be sent to Ziyafat Restaurant through WhatsApp.
+        </p>
+
+        <button
+            class="success-close"
+            onclick="closeSuccess()"
+        >
+            Continue
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   SUPABASE CONFIGURATION
+===================================================== */
+
+/*
+   Replace ONLY these two values with the values from:
+   Supabase Dashboard → Settings → API Keys
+
+   IMPORTANT:
+   Use the publishable key in browser code.
+   NEVER put a secret/service_role key in this file.
+*/
+const SUPABASE_URL = "https://mwtsmkxygemghblyxdmt.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_YLyhUA9poOS4DxRx-Mo2tQ_2MPiKN0m";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =====================================================
+   CART STORAGE
+===================================================== */
+
+let cart = [];
+
+
+function loadCart(){
+
+    const savedCart = localStorage.getItem("ziyafatCart");
+
+    if(savedCart){
+
+        try{
+            cart = JSON.parse(savedCart);
+
+        }catch(error){
+            cart = [];
+        }
+
+    }
+
+    renderOrder();
+}
+
+
+function saveCart(){
+
+    localStorage.setItem(
+        "ziyafatCart",
+        JSON.stringify(cart)
+    );
+
+}
+
+
+/* =====================================================
+   RENDER ITEMS
+===================================================== */
+
+function renderOrder(){
+
+    const container = document.getElementById("orderItems");
+
+    if(cart.length === 0){
+
+        container.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">🛒</div>
+                <h3>Your order is empty</h3>
+                <p>Choose something delicious from our menu.</p>
+                <a href="menu.html">Browse Menu</a>
+            </div>
+        `;
+
+        updateSummary();
+        return;
+    }
+
+    container.innerHTML = "";
+
+    cart.forEach((item,index)=>{
+
+        const element = document.createElement("div");
+        element.className = "order-item";
+
+        element.innerHTML = `
+            <img
+                class="order-image"
+                src="${item.image || 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=80'}"
+                alt="${item.name}"
+            >
+
+            <div class="order-info">
+                <div class="order-name">${item.name}</div>
+
+                <div class="order-price">
+                    AFN ${Number(item.price).toLocaleString()}
+                </div>
+
+                <div class="quantity">
+                    <button onclick="changeQuantity(${index},-1)">−</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="changeQuantity(${index},1)">+</button>
+                </div>
+
+                <button class="remove" onclick="removeItem(${index})">
+                    REMOVE
+                </button>
+            </div>
+
+            <div class="item-total">
+                AFN ${(Number(item.price) * Number(item.quantity)).toLocaleString()}
+            </div>
+        `;
+
+        container.appendChild(element);
+    });
+
+    updateSummary();
+}
+
+
+/* =====================================================
+   CHANGE QUANTITY
+===================================================== */
+
+function changeQuantity(index,amount){
+
+    cart[index].quantity += amount;
+
+    if(cart[index].quantity <= 0){
+        cart.splice(index,1);
+    }
+
+    saveCart();
+    renderOrder();
+}
+
+
+/* =====================================================
+   REMOVE ITEM
+===================================================== */
+
+function removeItem(index){
+
+    cart.splice(index,1);
+    saveCart();
+    renderOrder();
+}
+
+
+/* =====================================================
+   CALCULATE SUBTOTAL
+===================================================== */
+
+function calculateSubtotal(){
+
+    let subtotal = 0;
+
+    cart.forEach(item=>{
+        subtotal += Number(item.price) * Number(item.quantity);
+    });
+
+    return subtotal;
+}
+
+
+/* =====================================================
+   DELIVERY FEE
+===================================================== */
+
+function getDeliveryFee(){
+
+    const delivery = document.getElementById("delivery");
+
+    if(delivery && delivery.checked && cart.length > 0){
+        return 100;
+    }
+
+    return 0;
+}
+
+
+/* =====================================================
+   COUPON / DISCOUNT
+   The discount amount is never trusted from the browser —
+   validate_coupon() runs server-side in Supabase and is
+   re-checked again inside create_restaurant_order() when
+   the order is actually placed.
+===================================================== */
+
+let appliedCoupon = null;   // { code, amount }
+
+async function applyCoupon(){
+
+    const input = document.getElementById("couponInput");
+    const messageEl = document.getElementById("couponMessage");
+    const button = document.getElementById("applyCouponBtn");
+    const code = input.value.trim();
+
+    if(!code){
+        messageEl.textContent = "Enter a discount code.";
+        messageEl.style.color = "#c96666";
+        return;
+    }
+
+    const subtotal = calculateSubtotal();
+
+    button.disabled = true;
+    button.textContent = "Checking...";
+
+    try{
+
+        const { data, error } = await supabaseClient.rpc(
+            "validate_coupon",
+            { p_code: code, p_subtotal: subtotal }
+        );
+
+        if(error){
+            throw error;
+        }
+
+        const result = Array.isArray(data) ? data[0] : data;
+
+        if(result && result.valid){
+
+            appliedCoupon = {
+                code: code.toUpperCase(),
+                amount: Number(result.discount_amount)
+            };
+
+            messageEl.textContent = result.message || "Coupon applied.";
+            messageEl.style.color = "#70b883";
+
+        }else{
+
+            appliedCoupon = null;
+            messageEl.textContent = (result && result.message) || "Invalid or expired discount code.";
+            messageEl.style.color = "#c96666";
+
+        }
+
+    }catch(err){
+
+        console.error("Coupon validation error:", err);
+        appliedCoupon = null;
+        messageEl.textContent = "Could not validate that code right now.";
+        messageEl.style.color = "#c96666";
+
+    }finally{
+
+        button.disabled = false;
+        button.textContent = "Apply";
+        updateSummary();
+
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE SUMMARY
+===================================================== */
+
+function updateSummary(){
+
+    let itemCount = 0;
+
+    cart.forEach(item=>{
+        itemCount += Number(item.quantity);
+    });
+
+    const subtotal = calculateSubtotal();
+    const deliveryFee = getDeliveryFee();
+
+    // If cart contents changed since the coupon was applied, the discount
+    // may no longer be valid against the new subtotal — it will be
+    // re-validated for real at order-placement time regardless.
+    const discount = appliedCoupon ? Math.min(appliedCoupon.amount, subtotal) : 0;
+    const total = Math.max(0, subtotal + deliveryFee - discount);
+
+    document.getElementById("summaryItems").textContent = itemCount;
+
+    document.getElementById("subtotal").textContent =
+        "AFN " + subtotal.toLocaleString();
+
+    document.getElementById("deliveryFee").textContent =
+        deliveryFee === 0
+        ? "FREE"
+        : "AFN " + deliveryFee.toLocaleString();
+
+    const discountRow = document.getElementById("discountRow");
+
+    if(discount > 0){
+        discountRow.style.display = "flex";
+        document.getElementById("discountAmount").textContent =
+            "-AFN " + discount.toLocaleString();
+    }else{
+        discountRow.style.display = "none";
+    }
+
+    document.getElementById("grandTotal").textContent =
+        "AFN " + total.toLocaleString();
+}
+
+
+/* =====================================================
+   DELIVERY / TAKEAWAY
+===================================================== */
+
+document
+.querySelectorAll('input[name="orderType"]')
+.forEach(input=>{
+
+    input.addEventListener("change", function(){
+
+        const addressGroup = document.getElementById("addressGroup");
+
+        if(this.value === "Delivery"){
+            addressGroup.style.display = "block";
+        }else{
+            addressGroup.style.display = "none";
+        }
+
+        updateSummary();
+    });
+});
+
+
+/* =====================================================
+   BUILD WHATSAPP MESSAGE
+===================================================== */
+
+function buildWhatsAppMessage(orderId, name, phone, address, notes, payment, orderType, subtotal, deliveryFee, total, discount){
+
+    let message = "🍽️ *ZIYAFAT RESTAURANT*%0A";
+    message += "*NEW ORDER #%23" + encodeURIComponent(orderId) + "*%0A";
+    message += "━━━━━━━━━━━━━━━━━━━━%0A%0A";
+
+    message += "*CUSTOMER INFORMATION*%0A";
+    message += "Name: " + encodeURIComponent(name) + "%0A";
+    message += "Phone: " + encodeURIComponent(phone) + "%0A";
+    message += "Order Type: " + encodeURIComponent(orderType) + "%0A";
+
+    if(orderType === "Delivery"){
+        message += "Address: " + encodeURIComponent(address) + "%0A";
+    }
+
+    message += "Payment: " + encodeURIComponent(payment) + "%0A%0A";
+    message += "*ORDER DETAILS*%0A";
+    message += "━━━━━━━━━━━━━━━━━━━━%0A";
+
+    cart.forEach(item=>{
+
+        const itemTotal = Number(item.price) * Number(item.quantity);
+
+        message +=
+            "• " +
+            encodeURIComponent(item.name) +
+            " × " +
+            item.quantity +
+            " — AFN " +
+            itemTotal.toLocaleString() +
+            "%0A";
+    });
+
+    message += "%0A━━━━━━━━━━━━━━━━━━━━%0A";
+    message += "Subtotal: AFN " + subtotal.toLocaleString() + "%0A";
+    message += "Delivery: " + (deliveryFee === 0 ? "FREE" : "AFN " + deliveryFee.toLocaleString()) + "%0A";
+
+    if(discount > 0){
+        message += "Discount: -AFN " + discount.toLocaleString() + "%0A";
+    }
+
+    message += "*TOTAL: AFN " + total.toLocaleString() + "*%0A";
+
+    if(notes){
+        message += "%0A*Special Instructions:*%0A" + encodeURIComponent(notes) + "%0A";
+    }
+
+    message += "%0AThank you — Ziyafat Restaurant";
+
+    return message;
+}
+
+
+/* =====================================================
+   PLACE ORDER — SUPABASE DATABASE
+===================================================== */
+
+async function placeOrder(){
+
+    if(cart.length === 0){
+        alert("Your order is empty. Please choose something from the menu.");
+        return;
+    }
+
+    const name = document.getElementById("customerName").value.trim();
+    const phone = document.getElementById("customerPhone").value.trim();
+    console.log("CUSTOMER PHONE:", phone);
+    const address = document.getElementById("customerAddress").value.trim();
+    const notes = document.getElementById("customerNotes").value.trim();
+    const payment = document.getElementById("paymentMethod").value;
+    const orderType = document.querySelector('input[name="orderType"]:checked').value;
+    const button = document.querySelector(".place-order");
+
+    if(!name){
+        alert("Please enter your name.");
+        document.getElementById("customerName").focus();
+        return;
+    }
+
+    if(!phone){
+        alert("Please enter your phone number.");
+        document.getElementById("customerPhone").focus();
+        return;
+    }
+
+    if(orderType === "Delivery" && !address){
+        alert("Please enter your delivery address.");
+        document.getElementById("customerAddress").focus();
+        return;
+    }
+
+    /* Check configuration before making the request. */
+    if(
+        SUPABASE_URL.includes("PASTE_YOUR") ||
+        SUPABASE_PUBLISHABLE_KEY.includes("PASTE_YOUR")
+    ){
+        alert("Supabase is not connected yet. Please add your Supabase Project URL and Publishable Key to order.html.");
+        return;
+    }
+
+    /* Prevent accidental double-click orders. */
+    const originalButtonText = button ? button.innerHTML : "Place Order";
+
+    if(button){
+        button.disabled = true;
+        button.innerHTML = "Saving Your Order...";
+        button.style.opacity = "0.7";
+        button.style.cursor = "wait";
+    }
+
+    /*
+       Open a blank WhatsApp tab immediately while the browser still
+       considers this a direct user action. This avoids popup blockers
+       after the Supabase request finishes.
+    */
+    let whatsappWindow = null;
+
+    try{
+        whatsappWindow = window.open("about:blank", "_blank");
+    }catch(error){
+        whatsappWindow = null;
+    }
+
+    try{
+
+        /*
+           Send only item names + quantities.
+           Supabase looks up the real menu prices from menu_items.
+        */
+        const itemsForDatabase = cart.map(item => ({
+            name: item.name,
+            quantity: Number(item.quantity)
+        }));
+
+        const { data, error } = await supabaseClient.rpc(
+            "create_restaurant_order",
+            {
+                p_customer_name: name,
+                p_customer_phone: phone,
+                p_order_type: orderType,
+                p_delivery_address: orderType === "Delivery" ? address : null,
+                p_notes: notes || null,
+                p_payment_method: payment,
+                p_items: itemsForDatabase,
+                p_coupon_code: appliedCoupon ? appliedCoupon.code : null
+            }
+        );
+
+        if(error){
+            throw error;
+        }
+
+        const orderId = data.order_id;
+        const subtotal = Number(data.subtotal);
+        const deliveryFee = Number(data.delivery_fee);
+        const discount = Number(data.discount || 0);
+        const total = Number(data.total);
+
+        /* Build WhatsApp message AFTER the database confirms the order. */
+        const message = buildWhatsAppMessage(
+            orderId,
+            name,
+            phone,
+            address,
+            notes,
+            payment,
+            orderType,
+            subtotal,
+            deliveryFee,
+            total,
+            discount
+        );
+
+        const restaurantWhatsApp = "93782322222";
+        const whatsappURL =
+            "https://wa.me/" +
+            restaurantWhatsApp +
+            "?text=" +
+            message;
+
+        if(whatsappWindow && !whatsappWindow.closed){
+            whatsappWindow.location.href = whatsappURL;
+        }else{
+            /* Fallback if the browser blocked the new tab. */
+            window.open(whatsappURL, "_blank");
+        }
+
+        /* Clear the cart ONLY after Supabase successfully saved the order. */
+        cart = [];
+        appliedCoupon = null;
+        saveCart();
+
+        const orderNumber = document.getElementById("successOrderNumber");
+
+        if(orderNumber){
+            orderNumber.textContent = "#" + orderId;
+        }
+
+        document
+            .getElementById("successOverlay")
+            .classList.add("show");
+
+    }catch(error){
+
+        if(whatsappWindow && !whatsappWindow.closed){
+            whatsappWindow.close();
+        }
+
+        console.error("ZIYAFAT order error:", error);
+
+        alert(
+            "We could not save your order. Please try again.\n\n" +
+            (error.message || "Unknown Supabase error")
+        );
+
+    }finally{
+
+        if(button){
+            button.disabled = false;
+            button.innerHTML = originalButtonText;
+            button.style.opacity = "1";
+            button.style.cursor = "pointer";
+        }
+    }
+}
+
+
+/* =====================================================
+   CLOSE SUCCESS
+===================================================== */
+
+function closeSuccess(){
+    window.location.href = "menu.html";
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadCart();
+
+</script>
+
+
+</body>
+</html>

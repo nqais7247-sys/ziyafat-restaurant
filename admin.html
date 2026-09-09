@@ -1,0 +1,2665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ziyafat | Admin Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --gold: #c9a45c;
+    --gold-light: #e0c17d;
+    --dark: #0d0b09;
+    --dark2: #15120f;
+    --dark3: #1d1915;
+    --border: rgba(201,164,92,.22);
+    --text: #f4eee3;
+    --muted: #9e968a;
+    --green: #70b883;
+    --orange: #d99a4c;
+    --red: #c96666;
+}
+
+body {
+    background:
+        radial-gradient(circle at 20% 0%, rgba(201,164,92,.08), transparent 35%),
+        radial-gradient(circle at 100% 100%, rgba(201,164,92,.05), transparent 30%),
+        var(--dark);
+    color: var(--text);
+    font-family: Inter, sans-serif;
+    min-height: 100vh;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 255px;
+    background: #0a0907;
+    border-right: 1px solid var(--border);
+    padding: 30px 18px;
+    z-index: 100;
+}
+
+.brand {
+    text-align: center;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+}
+
+.brand-mark {
+    font-family: "Cormorant Garamond", serif;
+    color: var(--gold);
+    font-size: 34px;
+    letter-spacing: 7px;
+    font-weight: 600;
+}
+
+.brand-sub {
+    color: #777066;
+    font-size: 9px;
+    letter-spacing: 3px;
+    margin-top: 5px;
+    text-transform: uppercase;
+}
+
+.nav-title {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #615b53;
+    margin: 20px 12px 10px;
+    text-transform: uppercase;
+}
+
+.side-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 14px;
+    color: #aaa298;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    font-size: 13px;
+    transition: .25s;
+    cursor: pointer;
+}
+
+.side-link:hover,
+.side-link.active {
+    background: rgba(201,164,92,.11);
+    color: var(--gold-light);
+}
+
+.side-icon {
+    width: 22px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.sidebar-bottom {
+    position: absolute;
+    bottom: 25px;
+    left: 18px;
+    right: 18px;
+}
+
+.restaurant-status {
+    border: 1px solid rgba(112,184,131,.25);
+    background: rgba(112,184,131,.06);
+    border-radius: 9px;
+    padding: 13px;
+    font-size: 11px;
+    color: var(--green);
+}
+
+.status-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-right: 7px;
+    box-shadow: 0 0 10px rgba(112,184,131,.7);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main {
+    margin-left: 255px;
+    min-height: 100vh;
+}
+
+.topbar {
+    height: 82px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 38px;
+    background: rgba(13,11,9,.82);
+    backdrop-filter: blur(15px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.page-title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.page-title span {
+    color: var(--gold);
+}
+
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.refresh-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--gold-light);
+    padding: 9px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.refresh-btn:hover {
+    background: rgba(201,164,92,.1);
+}
+
+.admin-user {
+    border-left: 1px solid var(--border);
+    padding-left: 15px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content {
+    padding: 35px 38px 60px;
+}
+
+.welcome {
+    margin-bottom: 28px;
+}
+
+.welcome h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 36px;
+    font-weight: 500;
+}
+
+.welcome p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 17px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: linear-gradient(145deg, #191511, #110f0c);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 21px;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::after {
+    content: "";
+    position: absolute;
+    right: -25px;
+    bottom: -35px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgba(201,164,92,.08);
+    border-radius: 50%;
+}
+
+.stat-label {
+    color: var(--muted);
+    text-transform: uppercase;
+    font-size: 9px;
+    letter-spacing: 1.7px;
+}
+
+.stat-value {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 33px;
+    color: var(--gold-light);
+    margin-top: 8px;
+}
+
+.stat-extra {
+    color: #716a61;
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+/* =========================
+   SECTION HEADER
+========================= */
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 17px;
+}
+
+.section-title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 25px;
+}
+
+.section-title span {
+    color: var(--gold);
+}
+
+.search-box {
+    background: #15120f;
+    border: 1px solid var(--border);
+    padding: 10px 13px;
+    border-radius: 6px;
+    color: white;
+    outline: none;
+    width: 230px;
+}
+
+.search-box::placeholder {
+    color: #686158;
+}
+
+/* =========================
+   ORDERS
+========================= */
+
+.orders-container {
+    background: #110f0c;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.order-row {
+    display: grid;
+    grid-template-columns: 90px 1.5fr 1fr 120px 130px 150px;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(201,164,92,.09);
+    transition: .2s;
+}
+
+.order-row:hover {
+    background: rgba(201,164,92,.035);
+}
+
+.order-row:last-child {
+    border-bottom: none;
+}
+
+.order-header {
+    background: #181410;
+    color: #777067;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+}
+
+.order-id {
+    color: var(--gold-light);
+    font-size: 12px;
+}
+
+.customer-name {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.customer-phone {
+    color: #777067;
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+.order-type {
+    font-size: 11px;
+    color: #aaa298;
+}
+
+.order-total {
+    font-family: "Cormorant Garamond", serif;
+    color: var(--gold-light);
+    font-size: 18px;
+}
+
+.status-select {
+    border: 1px solid var(--border);
+    background: #17130f;
+    color: var(--gold-light);
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.status-new {
+    border-color: rgba(217,154,76,.4);
+}
+
+.status-preparing {
+    border-color: rgba(201,164,92,.5);
+}
+
+.status-ready {
+    border-color: rgba(112,184,131,.45);
+}
+
+.status-completed {
+    border-color: rgba(112,184,131,.25);
+    color: var(--green);
+}
+
+.status-cancelled {
+    border-color: rgba(201,102,102,.4);
+    color: var(--red);
+}
+
+.view-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: #b8aa95;
+    padding: 7px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.view-btn:hover {
+    background: rgba(201,164,92,.1);
+    color: var(--gold-light);
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty {
+    text-align: center;
+    padding: 55px 20px;
+    color: #696158;
+}
+
+.empty-icon {
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.empty h3 {
+    color: #aaa298;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 23px;
+    font-weight: 500;
+}
+
+.empty p {
+    margin-top: 6px;
+    font-size: 11px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.75);
+    backdrop-filter: blur(8px);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-box {
+    width: min(650px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #15120f;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.6);
+}
+
+.modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 25px;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-head h2 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: #999188;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.detail {
+    background: #0f0d0a;
+    border: 1px solid rgba(201,164,92,.1);
+    padding: 14px;
+    border-radius: 7px;
+}
+
+.detail.full {
+    grid-column: 1 / -1;
+}
+
+.detail-label {
+    color: #6d665e;
+    text-transform: uppercase;
+    font-size: 8px;
+    letter-spacing: 1.4px;
+}
+
+.detail-value {
+    color: #eee6d8;
+    margin-top: 6px;
+    font-size: 12px;
+}
+
+.items-title {
+    color: var(--gold);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.item-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(201,164,92,.08);
+    font-size: 12px;
+}
+
+.item-price {
+    color: var(--gold-light);
+}
+
+.modal-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border);
+    font-family: "Cormorant Garamond", serif;
+    font-size: 23px;
+    color: var(--gold-light);
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    background: #191611;
+    border: 1px solid var(--border);
+    color: #eee6d8;
+    padding: 13px 18px;
+    border-radius: 7px;
+    font-size: 11px;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: .3s;
+    z-index: 1000;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+.mobile-menu {
+    display: none;
+}
+
+
+.order-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.accept-btn,.decline-btn{border-radius:5px;padding:7px 10px;font-size:10px;cursor:pointer;transition:.2s;}
+.accept-btn{background:rgba(112,184,131,.08);border:1px solid rgba(112,184,131,.35);color:#8bd09a;}
+.accept-btn:hover{background:rgba(112,184,131,.16);}
+.decline-btn{background:rgba(201,102,102,.07);border:1px solid rgba(201,102,102,.32);color:#e18a8a;}
+.decline-btn:hover{background:rgba(201,102,102,.14);}
+.print-btn{background:rgba(201,164,92,.08);border:1px solid rgba(201,164,92,.35);color:var(--gold-light);border-radius:5px;padding:7px 10px;font-size:10px;cursor:pointer;transition:.2s;}
+.print-btn:hover{background:rgba(201,164,92,.16);}
+
+.history-container{background:#110f0c;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.history-row{display:grid;grid-template-columns:80px 1.4fr 110px 120px 120px 170px;align-items:center;gap:15px;padding:15px 20px;border-bottom:1px solid rgba(201,164,92,.08);font-size:11px;}
+.history-row:last-child{border-bottom:none;}
+.history-header{background:#181410;color:#777067;font-size:9px;text-transform:uppercase;letter-spacing:1.3px;}
+.history-status{display:inline-block;padding:5px 8px;border-radius:5px;border:1px solid var(--border);color:var(--gold-light);font-size:9px;}
+.history-status.accepted{color:#8bd09a;border-color:rgba(112,184,131,.35);}
+.history-status.declined,.history-status.cancelled{color:#e18a8a;border-color:rgba(201,102,102,.35);}
+.history-date{color:#777067;font-size:10px;}
+
+@media(max-width: 1100px) {
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .order-row {
+        grid-template-columns: 70px 1.5fr 100px 100px;
+    }
+
+    .order-row > div:nth-child(3) {
+        display: none;
+    }
+
+    .order-row > div:nth-child(6) {
+        display: none;
+    }
+}
+
+@media(max-width: 750px) {
+    .history-container{overflow-x:auto;}
+    .history-row{min-width:760px;}
+
+    .sidebar {
+        transform: translateX(-100%);
+        transition: .3s;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .mobile-menu {
+        display: block;
+        background: none;
+        border: none;
+        color: var(--gold);
+        font-size: 22px;
+        margin-right: 15px;
+        cursor: pointer;
+    }
+
+    .topbar {
+        padding: 0 18px;
+    }
+
+    .page-title {
+        font-size: 22px;
+    }
+
+    .admin-user {
+        display: none;
+    }
+
+    .content {
+        padding: 25px 15px 50px;
+    }
+
+    .welcome h1 {
+        font-size: 30px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 15px;
+    }
+
+    .stat-value {
+        font-size: 27px;
+    }
+
+    .section-header {
+        align-items: flex-start;
+        gap: 10px;
+        flex-direction: column;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .orders-container {
+        overflow-x: auto;
+    }
+
+    .order-row {
+        min-width: 650px;
+    }
+}
+
+
+/* =========================
+   MENU MANAGEMENT
+========================= */
+.menu-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.primary-btn{background:var(--gold);border:1px solid var(--gold);color:#0d0b09;padding:10px 16px;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600}
+.primary-btn:hover{background:var(--gold-light)}
+.secondary-btn{background:transparent;border:1px solid var(--border);color:var(--gold-light);padding:10px 14px;border-radius:6px;cursor:pointer;font-size:11px}
+.secondary-btn:hover{background:rgba(201,164,92,.1)}
+.menu-container{background:#110f0c;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.menu-row{display:grid;grid-template-columns:70px minmax(180px,1.5fr) 150px 100px 110px 190px;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid rgba(201,164,92,.09)}
+.menu-row:last-child{border-bottom:none}
+.menu-row:hover{background:rgba(201,164,92,.035)}
+.menu-header{background:#181410;color:#777067;font-size:9px;text-transform:uppercase;letter-spacing:1.3px}
+.menu-thumb{width:50px;height:50px;border-radius:7px;object-fit:cover;background:#0f0d0a;border:1px solid var(--border)}
+.menu-name{font-size:13px;font-weight:500}.menu-description{color:#777067;font-size:10px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu-category{font-size:10px;color:#aaa298}.menu-price{font-family:"Cormorant Garamond",serif;color:var(--gold-light);font-size:18px}
+.available-badge{display:inline-block;padding:5px 8px;border-radius:20px;font-size:9px}
+.available-yes{color:var(--green);background:rgba(112,184,131,.08);border:1px solid rgba(112,184,131,.25)}
+.available-no{color:#c98b8b;background:rgba(201,102,102,.07);border:1px solid rgba(201,102,102,.25)}
+.menu-actions{display:flex;gap:7px;flex-wrap:wrap}.edit-btn,.delete-btn{padding:7px 9px;border-radius:5px;background:transparent;cursor:pointer;font-size:10px}
+.edit-btn{border:1px solid var(--border);color:var(--gold-light)}.delete-btn{border:1px solid rgba(201,102,102,.3);color:#c98b8b}.edit-btn:hover{background:rgba(201,164,92,.1)}.delete-btn:hover{background:rgba(201,102,102,.08)}
+.menu-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.form-field{margin-bottom:15px}.form-field.full{grid-column:1/-1}.form-field label{display:block;color:#aaa298;font-size:9px;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:7px}.form-field input,.form-field select,.form-field textarea{width:100%;background:#0f0d0a;border:1px solid var(--border);border-radius:7px;padding:11px 12px;color:#eee6d8;outline:none;font-family:Inter,sans-serif;font-size:12px}.form-field textarea{min-height:85px;resize:vertical}.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:rgba(201,164,92,.65)}.check-row{display:flex;gap:20px;flex-wrap:wrap;margin-top:3px}.check-row label{display:flex;align-items:center;gap:7px;color:#aaa298;font-size:11px;text-transform:none;letter-spacing:0}.check-row input{width:auto}.form-actions{display:flex;justify-content:flex-end;gap:10px;padding-top:8px}
+.menu-filter{display:flex;gap:10px;align-items:center;margin-bottom:17px}.menu-filter .search-box{width:280px}.category-filter{background:#15120f;border:1px solid var(--border);color:#d8ccb9;border-radius:6px;padding:10px 12px;outline:none;font-size:11px}
+@media(max-width:1100px){.menu-row{grid-template-columns:60px 1.5fr 120px 90px 100px 170px}.menu-row>div:nth-child(3){display:none}}
+@media(max-width:750px){.menu-container{overflow-x:auto}.menu-row{min-width:850px}.menu-filter{flex-direction:column;align-items:stretch}.menu-filter .search-box{width:100%}.menu-form-grid{grid-template-columns:1fr}.form-field.full{grid-column:auto}}
+
+/* =========================
+   ADMIN LOGIN
+========================= */
+
+.login-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(201,164,92,.10), transparent 38%),
+        #0a0907;
+}
+
+.login-box {
+    width: min(430px, 100%);
+    background: #15120f;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 38px;
+    box-shadow: 0 25px 90px rgba(0,0,0,.65);
+}
+
+.login-brand {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-brand .brand-mark {
+    font-family: "Cormorant Garamond", serif;
+    color: var(--gold);
+    font-size: 40px;
+    letter-spacing: 8px;
+    font-weight: 600;
+}
+
+.login-brand p {
+    color: #777066;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 7px;
+}
+
+.login-title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 29px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 7px;
+}
+
+.login-subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 25px;
+}
+
+.login-field {
+    margin-bottom: 17px;
+}
+
+.login-field label {
+    display: block;
+    color: #aaa298;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 7px;
+}
+
+.login-field input {
+    width: 100%;
+    background: #0f0d0a;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 13px 14px;
+    color: #eee6d8;
+    outline: none;
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+}
+
+.login-field input:focus {
+    border-color: rgba(201,164,92,.65);
+}
+
+.login-button {
+    width: 100%;
+    margin-top: 5px;
+    padding: 13px;
+    border: 1px solid var(--gold);
+    border-radius: 7px;
+    background: var(--gold);
+    color: #0d0b09;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 12px;
+    letter-spacing: .5px;
+}
+
+.login-button:hover {
+    background: var(--gold-light);
+}
+
+.login-button:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+.login-error {
+    display: none;
+    margin-top: 15px;
+    padding: 11px 13px;
+    border: 1px solid rgba(201,102,102,.35);
+    background: rgba(201,102,102,.07);
+    color: #df9292;
+    border-radius: 7px;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.login-error.show {
+    display: block;
+}
+
+.logout-btn {
+    background: transparent;
+    border: 1px solid rgba(201,102,102,.30);
+    color: #c98b8b;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.logout-btn:hover {
+    background: rgba(201,102,102,.08);
+}
+
+.dashboard-hidden {
+    display: none !important;
+}
+
+@media(max-width: 500px) {
+    .login-box {
+        padding: 28px 22px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     ADMIN LOGIN
+========================= -->
+
+<div class="login-screen" id="loginScreen">
+    <div class="login-box">
+
+        <div class="login-brand">
+            <div class="brand-mark">ZIYAFAT</div>
+            <p>Restaurant Administration</p>
+        </div>
+
+        <div class="login-title">Administrator Login</div>
+        <div class="login-subtitle">
+            Sign in to access the Ziyafat dashboard.
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+
+            <div class="login-field">
+                <label for="loginEmail">Email</label>
+                <input
+                    type="email"
+                    id="loginEmail"
+                    autocomplete="username"
+                    placeholder="admin@example.com"
+                    required
+                >
+            </div>
+
+            <div class="login-field">
+                <label for="loginPassword">Password</label>
+                <input
+                    type="password"
+                    id="loginPassword"
+                    autocomplete="current-password"
+                    placeholder="Enter your password"
+                    required
+                >
+            </div>
+
+            <button
+                type="submit"
+                class="login-button"
+                id="loginButton"
+            >
+                Sign In
+            </button>
+
+            <div class="login-error" id="loginError"></div>
+
+        </form>
+
+    </div>
+</div>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar dashboard-area dashboard-hidden" id="sidebar">
+
+    <div class="brand">
+        <div class="brand-mark">ZIYAFAT</div>
+        <div class="brand-sub">Restaurant Administration</div>
+    </div>
+
+    <div class="nav-title">Management</div>
+
+    <div class="side-link active">
+        <span class="side-icon">⌂</span>
+        Dashboard
+    </div>
+
+    <div class="side-link" onclick="scrollToOrders()">
+        <span class="side-icon">◈</span>
+        Orders
+    </div>
+
+    <div class="side-link" onclick="scrollToHistory()">
+        <span class="side-icon">▤</span>
+        Order History
+    </div>
+
+    <div class="side-link" onclick="scrollToMenu()">
+        <span class="side-icon">♨</span>
+        Menu Management
+    </div>
+
+    <div class="nav-title">Restaurant</div>
+
+    <div class="side-link">
+        <span class="side-icon">◉</span>
+        Customers
+    </div>
+
+    <div class="side-link">
+        <span class="side-icon">▣</span>
+        Reports
+    </div>
+
+    <div class="nav-title">Website</div>
+
+    <a href="index.html" class="side-link">
+        <span class="side-icon">↗</span>
+        View Website
+    </a>
+
+    <a href="menu.html" class="side-link">
+        <span class="side-icon">☰</span>
+        View Menu
+    </a>
+
+    <div class="sidebar-bottom">
+
+        <div class="restaurant-status">
+            <span class="status-dot"></span>
+            Restaurant Online
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main dashboard-area dashboard-hidden">
+
+    <header class="topbar">
+
+        <div style="display:flex;align-items:center;">
+            <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+
+            <div class="page-title">
+                Ziyafat <span>Dashboard</span>
+            </div>
+        </div>
+
+        <div class="top-actions">
+
+            <button class="refresh-btn" onclick="loadOrders()">
+                ↻ Refresh
+            </button>
+
+            <button class="logout-btn" onclick="handleLogout()">
+                Logout
+            </button>
+
+            <div class="admin-user">
+                Administrator
+                <span id="dbStatus" style="margin-left:12px;color:#777;font-size:10px;">
+                    • Connecting...
+                </span>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <section class="content">
+
+        <div class="welcome">
+
+            <h1>
+                Welcome to Ziyafat
+            </h1>
+
+            <p>
+                Manage your restaurant orders and monitor today's activity.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             STATISTICS
+        ========================= -->
+
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Total Orders
+                </div>
+
+                <div class="stat-value" id="totalOrders">
+                    —
+                </div>
+
+                <div class="stat-extra">
+                    All recorded orders
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    New Orders
+                </div>
+
+                <div class="stat-value" id="newOrders">
+                    —
+                </div>
+
+                <div class="stat-extra">
+                    Require attention
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Preparing
+                </div>
+
+                <div class="stat-value" id="preparingOrders">
+                    —
+                </div>
+
+                <div class="stat-extra">
+                    Currently in kitchen
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Revenue
+                </div>
+
+                <div class="stat-value" id="revenue">
+                    —
+                </div>
+
+                <div class="stat-extra">
+                    Total recorded sales
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             MENU MANAGEMENT
+        ========================= -->
+        <div id="menuSection" style="margin-bottom:45px;">
+            <div class="section-header">
+                <div class="section-title">Menu <span>Management</span></div>
+                <div class="menu-toolbar">
+                    <button class="primary-btn" onclick="openMenuModal()">＋ Add Menu Item</button>
+                    <button class="secondary-btn" onclick="loadMenuItems()">↻ Refresh</button>
+                </div>
+            </div>
+
+            <div class="menu-filter">
+                <input type="text" class="search-box" id="searchMenu" placeholder="Search menu items..." oninput="filterMenuItems()">
+                <select class="category-filter" id="menuCategoryFilter" onchange="filterMenuItems()">
+                    <option value="">All Categories</option>
+                    <option>Cold Drinks</option><option>Hot Drinks</option><option>Mocktails</option>
+                    <option>Starters</option><option>Salads &amp; Soups</option><option>Main Course</option>
+                    <option>Rice &amp; Kabab</option><option>Afghan Specialties</option><option>Bread &amp; Sides</option><option>Desserts</option>
+                </select>
+            </div>
+
+            <div class="menu-container">
+                <div class="menu-row menu-header">
+                    <div>Image</div><div>Item</div><div>Category</div><div>Price</div><div>Availability</div><div>Actions</div>
+                </div>
+                <div id="menuList"><div class="empty"><div class="empty-icon">◌</div><h3>Loading menu...</h3><p>Connecting to Ziyafat menu.</p></div></div>
+            </div>
+        </div>
+
+        <!-- =========================
+             ORDERS
+        ========================= -->
+
+        <div id="ordersSection">
+
+            <div class="section-header">
+
+                <div class="section-title">
+                    Recent <span>Orders</span>
+                </div>
+
+                <input
+                    type="text"
+                    class="search-box"
+                    id="searchOrders"
+                    placeholder="Search customer or order..."
+                    oninput="filterOrders()"
+                >
+
+            </div>
+
+
+            <div class="orders-container">
+
+                <div class="order-row order-header">
+
+                    <div>Order</div>
+                    <div>Customer</div>
+                    <div>Type</div>
+                    <div>Total</div>
+                    <div>Status</div>
+                    <div>Action</div>
+
+                </div>
+
+                <div id="ordersList">
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            ◌
+                        </div>
+
+                        <h3>
+                            Loading orders...
+                        </h3>
+
+                        <p>
+                            Connecting to Ziyafat database.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDER HISTORY -->
+        <div id="historySection" style="margin-top:45px;">
+            <div class="section-header">
+                <div>
+                    <div class="section-title">Order <span>History</span></div>
+                    <div style="color:var(--muted);font-size:11px;margin-top:5px;">All orders, including accepted and declined orders.</div>
+                </div>
+                <input type="text" class="search-box" id="searchHistory" placeholder="Search order history..." oninput="filterHistory()">
+            </div>
+            <div class="history-container">
+                <div class="history-row history-header">
+                    <div>Order</div><div>Customer</div><div>Type</div><div>Total</div><div>Status</div><div>Date</div>
+                </div>
+                <div id="historyList"><div class="empty"><h3>Loading order history...</h3></div></div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+
+<!-- =========================
+     MENU ITEM MODAL
+========================= -->
+<div class="modal" id="menuModal">
+    <div class="modal-box">
+        <div class="modal-head"><h2 id="menuModalTitle">Add Menu Item</h2><button class="close-modal" onclick="closeMenuModal()">×</button></div>
+        <div class="modal-body">
+            <form id="menuForm" onsubmit="saveMenuItem(event)">
+                <input type="hidden" id="menuItemId">
+                <div class="menu-form-grid">
+                    <div class="form-field"><label>Item Name</label><input id="menuName" required maxlength="120"></div>
+                    <div class="form-field"><label>Price (AFN)</label><input id="menuPrice" type="number" min="0" step="0.01" required></div>
+                    <div class="form-field"><label>Category</label><select id="menuCategory" required>
+                        <option>Cold Drinks</option><option>Hot Drinks</option><option>Mocktails</option><option>Starters</option><option>Salads &amp; Soups</option><option>Main Course</option><option>Rice &amp; Kabab</option><option>Afghan Specialties</option><option>Bread &amp; Sides</option><option>Desserts</option>
+                    </select></div>
+                    <div class="form-field"><label>Image URL</label><input id="menuImage" type="url" placeholder="https://..."></div>
+                    <div class="form-field full"><label>Description</label><textarea id="menuDescription" maxlength="500"></textarea></div>
+                    <div class="form-field full"><div class="check-row"><label><input type="checkbox" id="menuAvailable" checked> Available</label><label><input type="checkbox" id="menuFeatured"> Featured</label></div></div>
+                </div>
+                <div class="form-actions"><button type="button" class="secondary-btn" onclick="closeMenuModal()">Cancel</button><button type="submit" class="primary-btn" id="saveMenuButton">Save Item</button></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- =========================
+     ORDER DETAIL MODAL
+========================= -->
+
+<div class="modal" id="orderModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2>
+                Order <span id="modalOrderId"></span>
+            </h2>
+
+            <button class="close-modal" onclick="closeModal()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div class="detail-grid">
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Customer
+                    </div>
+
+                    <div class="detail-value" id="modalCustomer">
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Phone
+                    </div>
+
+                    <div class="detail-value" id="modalPhone">
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Order Type
+                    </div>
+
+                    <div class="detail-value" id="modalType">
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Payment
+                    </div>
+
+                    <div class="detail-value" id="modalPayment">
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="detail full">
+
+                    <div class="detail-label">
+                        Delivery Address
+                    </div>
+
+                    <div class="detail-value" id="modalAddress">
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="detail full">
+
+                    <div class="detail-label">
+                        Customer Notes
+                    </div>
+
+                    <div class="detail-value" id="modalNotes">
+                        —
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="items-title">
+                Ordered Items
+            </div>
+
+            <div id="modalItems"></div>
+
+
+            <div class="modal-total">
+
+                <span>
+                    Total
+                </span>
+
+                <span id="modalTotal">
+                    0 AFN
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="toast" id="toast">
+    Order updated.
+</div>
+
+
+<script>
+
+/* =========================================================
+   SUPABASE CONFIGURATION
+========================================================= */
+
+const SUPABASE_URL = "https://mwtsmkxygemghblyxdmt.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_YLyhUA9poOS4DxRx-Mo2tQ_2MPiKN0m";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
+
+let allOrders = [];
+let allMenuItems = [];
+
+
+/* =========================================================
+   LOAD ORDERS
+========================================================= */
+
+async function loadOrders() {
+
+    const list = document.getElementById("ordersList");
+
+    list.innerHTML = `
+        <div class="empty">
+            <div class="empty-icon">◌</div>
+            <h3>Loading orders...</h3>
+            <p>Connecting to Ziyafat database.</p>
+        </div>
+    `;
+
+    try {
+
+        /* ---------------------------------------------------------
+           STEP 1 — LOAD ORDERS DIRECTLY
+           We intentionally do NOT use:
+           .select("*, order_items (*)")
+           because Supabase can fail if the foreign-key relationship
+           is not configured exactly as expected.
+        --------------------------------------------------------- */
+
+        const {
+            data: orders,
+            error: ordersError
+        } = await supabaseClient
+            .from("orders")
+            .select("*")
+            .order("created_at", {
+                ascending: false
+            });
+
+        if (ordersError) {
+            throw new Error(
+                "Could not read the orders table: " +
+                ordersError.message
+            );
+        }
+
+        const safeOrders = orders || [];
+
+        /* ---------------------------------------------------------
+           STEP 2 — LOAD ORDER ITEMS SEPARATELY
+        --------------------------------------------------------- */
+
+        if (safeOrders.length) {
+
+            const orderIds = safeOrders.map(order => order.id);
+
+            const {
+                data: items,
+                error: itemsError
+            } = await supabaseClient
+                .from("order_items")
+                .select("*")
+                .in("order_id", orderIds);
+
+            if (itemsError) {
+                console.warn(
+                    "Order items could not be loaded:",
+                    itemsError
+                );
+
+                safeOrders.forEach(order => {
+                    order.order_items = [];
+                });
+
+            } else {
+
+                safeOrders.forEach(order => {
+
+                    order.order_items =
+                        (items || []).filter(
+                            item =>
+                                Number(item.order_id) ===
+                                Number(order.id)
+                        );
+
+                });
+
+            }
+
+        }
+
+        allOrders = safeOrders;
+
+        const dbStatus = document.getElementById("dbStatus");
+        if (dbStatus) {
+            dbStatus.textContent = "• Database connected";
+            dbStatus.style.color = "#70b883";
+        }
+
+        updateStatistics(allOrders);
+
+        renderOrders(allOrders);
+        renderHistory(allOrders);
+
+    }
+
+    catch (error) {
+
+        console.error("ZIYAFAT ADMIN ERROR:", error);
+
+        const dbStatus = document.getElementById("dbStatus");
+        if (dbStatus) {
+            dbStatus.textContent = "• Database error";
+            dbStatus.style.color = "#c96666";
+        }
+
+        list.innerHTML = `
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ⚠
+                </div>
+
+                <h3>
+                    Could not load orders
+                </h3>
+
+                <p style="max-width:650px;margin:10px auto;line-height:1.8;color:#c98b78;">
+                    ${escapeHtml(error.message)}
+                </p>
+
+                <button
+                    class="refresh-btn"
+                    style="margin-top:15px;"
+                    onclick="loadOrders()">
+                    Try Again
+                </button>
+
+            </div>
+        `;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   MENU MANAGEMENT
+========================================================= */
+async function loadMenuItems(){
+    const list=document.getElementById("menuList");
+    if(!list) return;
+    list.innerHTML='<div class="empty"><div class="empty-icon">◌</div><h3>Loading menu...</h3><p>Connecting to Ziyafat menu.</p></div>';
+    try{
+        const {data,error}=await supabaseClient.from("menu_items").select("*").order("id",{ascending:true});
+        if(error) throw new Error("Could not load menu: "+error.message);
+        allMenuItems=data||[];
+        renderMenuItems(allMenuItems);
+    }catch(error){
+        console.error("MENU LOAD ERROR:",error);
+        list.innerHTML='<div class="empty"><div class="empty-icon">⚠</div><h3>Could not load menu</h3><p style="max-width:650px;margin:10px auto;line-height:1.8;color:#c98b78;">'+escapeHtml(error.message)+'</p><button class="refresh-btn" style="margin-top:15px;" onclick="loadMenuItems()">Try Again</button></div>';
+    }
+}
+function renderMenuItems(items){
+    const list=document.getElementById("menuList");
+    if(!items.length){list.innerHTML='<div class="empty"><div class="empty-icon">◇</div><h3>No menu items</h3><p>Add your first menu item using the button above.</p></div>';return;}
+    list.innerHTML=items.map(item=>{
+        const img=item.image_url||"";
+        return `<div class="menu-row">
+            <div>${img?`<img class="menu-thumb" src="${escapeHtml(img)}" alt="" onerror="this.style.display='none'">`:'<div class="menu-thumb" style="display:flex;align-items:center;justify-content:center;color:#6d665e">✦</div>'}</div>
+            <div><div class="menu-name">${escapeHtml(item.name)}</div><div class="menu-description">${escapeHtml(item.description||"No description")}</div></div>
+            <div class="menu-category">${escapeHtml(item.category||"—")}</div>
+            <div class="menu-price">${formatMoney(item.price)} AFN</div>
+            <div><span class="available-badge ${item.available?'available-yes':'available-no'}">${item.available?'Available':'Unavailable'}</span></div>
+            <div class="menu-actions"><button class="edit-btn" onclick="editMenuItem(${Number(item.id)})">Edit</button><button class="edit-btn" onclick="toggleMenuAvailability(${Number(item.id)})">${item.available?'Disable':'Enable'}</button><button class="delete-btn" onclick="deleteMenuItem(${Number(item.id)})">Delete</button></div>
+        </div>`;
+    }).join("");
+}
+function filterMenuItems(){
+    const search=(document.getElementById("searchMenu")?.value||"").toLowerCase().trim();
+    const category=document.getElementById("menuCategoryFilter")?.value||"";
+    renderMenuItems(allMenuItems.filter(item=>{
+        const matchesSearch=!search||[item.name,item.description,item.category].some(v=>String(v||"").toLowerCase().includes(search));
+        return matchesSearch&&(!category||item.category===category);
+    }));
+}
+function openMenuModal(item=null){
+    document.getElementById("menuForm").reset();
+    document.getElementById("menuItemId").value=item?.id||"";
+    document.getElementById("menuName").value=item?.name||"";
+    document.getElementById("menuPrice").value=item?.price??"";
+    document.getElementById("menuCategory").value=item?.category||"Main Course";
+    document.getElementById("menuImage").value=item?.image_url||"";
+    document.getElementById("menuDescription").value=item?.description||"";
+    document.getElementById("menuAvailable").checked=item?item.available:true;
+    document.getElementById("menuFeatured").checked=item?!!item.featured:false;
+    document.getElementById("menuModalTitle").textContent=item?"Edit Menu Item":"Add Menu Item";
+    document.getElementById("saveMenuButton").textContent=item?"Save Changes":"Add Item";
+    document.getElementById("menuModal").classList.add("show");
+}
+function editMenuItem(id){const item=allMenuItems.find(x=>Number(x.id)===Number(id));if(item) openMenuModal(item);}
+function closeMenuModal(){document.getElementById("menuModal")?.classList.remove("show");}
+async function saveMenuItem(event){
+    event.preventDefault();
+    const button=document.getElementById("saveMenuButton"); button.disabled=true; button.textContent="Saving...";
+    try{
+        const id=document.getElementById("menuItemId").value;
+        const payload={name:document.getElementById("menuName").value.trim(),description:document.getElementById("menuDescription").value.trim(),price:Number(document.getElementById("menuPrice").value),category:document.getElementById("menuCategory").value,image_url:document.getElementById("menuImage").value.trim(),available:document.getElementById("menuAvailable").checked,featured:document.getElementById("menuFeatured").checked};
+        if(!payload.name||!Number.isFinite(payload.price)||payload.price<0) throw new Error("Please enter a valid name and price.");
+        let result;
+        if(id) result=await supabaseClient.from("menu_items").update(payload).eq("id",id);
+        else result=await supabaseClient.from("menu_items").insert(payload);
+        if(result.error) throw new Error(result.error.message);
+        closeMenuModal(); showToast(id?"Menu item updated.":"Menu item added."); await loadMenuItems();
+    }catch(error){console.error("MENU SAVE ERROR:",error);alert("Could not save menu item:\n\n"+error.message);}finally{button.disabled=false;button.textContent=document.getElementById("menuItemId").value?"Save Changes":"Add Item";}
+}
+async function toggleMenuAvailability(id){
+    const item=allMenuItems.find(x=>Number(x.id)===Number(id)); if(!item)return;
+    try{const {error}=await supabaseClient.from("menu_items").update({available:!item.available}).eq("id",id);if(error)throw error;showToast(item.available?"Item marked unavailable.":"Item marked available.");await loadMenuItems();}catch(error){alert("Could not update availability:\n\n"+error.message);}
+}
+async function deleteMenuItem(id){
+    const item=allMenuItems.find(x=>Number(x.id)===Number(id)); if(!item)return;
+    if(!confirm(`Delete "${item.name}" from the menu?\n\nThis cannot be undone.`))return;
+    try{const {error}=await supabaseClient.from("menu_items").delete().eq("id",id);if(error)throw error;showToast("Menu item deleted.");await loadMenuItems();}catch(error){console.error("MENU DELETE ERROR:",error);alert("Could not delete menu item:\n\n"+error.message);}
+}
+function scrollToMenu(){document.getElementById("menuSection")?.scrollIntoView({behavior:"smooth"});}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+function updateStatistics(orders) {
+
+    const total =
+        orders.length;
+
+
+    const newCount =
+        orders.filter(o =>
+            normalizeStatus(o.status) === "new"
+        ).length;
+
+
+    const preparingCount =
+        orders.filter(o =>
+            normalizeStatus(o.status) === "preparing"
+        ).length;
+
+
+    const revenue =
+        orders.reduce(
+            (sum, order) =>
+                sum + Number(order.total || 0),
+            0
+        );
+
+
+    document.getElementById("totalOrders")
+        .textContent = total;
+
+
+    document.getElementById("newOrders")
+        .textContent = newCount;
+
+
+    document.getElementById("preparingOrders")
+        .textContent = preparingCount;
+
+
+    document.getElementById("revenue")
+        .textContent =
+            formatMoney(revenue) + " AFN";
+}
+
+
+/* =========================================================
+   RENDER ORDERS
+========================================================= */
+
+function renderOrders(orders) {
+
+    const list =
+        document.getElementById("ordersList");
+
+
+    if (!orders.length) {
+
+        list.innerHTML = `
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ◇
+                </div>
+
+                <h3>
+                    No orders yet
+                </h3>
+
+                <p>
+                    Customer orders will appear here.
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML =
+        orders.map(order => {
+
+            const status =
+                normalizeStatus(order.status);
+
+
+            return `
+
+                <div class="order-row">
+
+                    <div class="order-id">
+                        #${escapeHtml(String(order.id))}
+                    </div>
+
+
+                    <div>
+
+                        <div class="customer-name">
+                            ${escapeHtml(
+                                order.customer_name || "Customer"
+                            )}
+                        </div>
+
+                        <div class="customer-phone">
+                            ${escapeHtml(
+                                order.customer_phone || ""
+                            )}
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-type">
+                        ${escapeHtml(
+                            order.order_type || "—"
+                        )}
+                    </div>
+
+
+                    <div class="order-total">
+                        ${formatMoney(order.total)} AFN
+                    </div>
+
+
+                    <div>
+
+                        <select
+                            class="status-select status-${status}"
+                            onchange="changeStatus(${order.id}, this.value)"
+                        >
+
+                            <option
+                                value="new"
+                                ${status === "new" ? "selected" : ""}
+                            >
+                                New
+                            </option>
+
+                            <option
+                                value="accepted"
+                                ${status === "accepted" ? "selected" : ""}
+                            >
+                                Accepted
+                            </option>
+
+                            <option
+                                value="preparing"
+                                ${status === "preparing" ? "selected" : ""}
+                            >
+                                Preparing
+                            </option>
+
+                            <option
+                                value="ready"
+                                ${status === "ready" ? "selected" : ""}
+                            >
+                                Ready
+                            </option>
+
+                            <option
+                                value="out_for_delivery"
+                                ${status === "out_for_delivery" ? "selected" : ""}
+                            >
+                                Out for Delivery
+                            </option>
+
+                            <option
+                                value="completed"
+                                ${status === "completed" ? "selected" : ""}
+                            >
+                                Completed
+                            </option>
+
+                            <option
+                                value="cancelled"
+                                ${status === "cancelled" ? "selected" : ""}
+                            >
+                                Cancelled
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="order-actions">
+                        ${status === "new" ? `
+                            <button class="accept-btn" onclick="acceptOrder(${order.id})">Accept</button>
+                            <button class="decline-btn" onclick="declineOrder(${order.id})">Decline</button>
+                        ` : ""}
+                        ${status === "accepted" ? `
+                            <button class="print-btn" onclick="printReceipt(${order.id})">🖨 Print Receipt</button>
+                        ` : ""}
+                        <button class="view-btn" onclick="viewOrder(${order.id})">View Details</button>
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   CHANGE ORDER STATUS
+========================================================= */
+
+async function changeStatus(orderId, newStatus) {
+
+    const dbStatusMap = {
+        new:"New", accepted:"Accepted", declined:"Declined", preparing:"Preparing",
+        ready:"Ready", out_for_delivery:"Out for Delivery", completed:"Completed", cancelled:"Cancelled"
+    };
+    const dbStatus = dbStatusMap[normalizeStatus(newStatus)] || newStatus;
+
+    try {
+
+        const { error } =
+            await supabaseClient
+                .from("orders")
+                .update({
+                    status: dbStatus
+                })
+                .eq("id", orderId);
+
+        if (error) {
+            throw new Error(
+                "Status update failed: " + error.message
+            );
+        }
+
+
+        showToast(
+            "Order #" + orderId +
+            " changed to " +
+            dbStatus
+        );
+
+
+        await loadOrders();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not update order:\n\n" +
+            error.message
+        );
+
+        await loadOrders();
+
+    }
+
+}
+
+
+/* =========================================================
+   ACCEPT / DECLINE ORDERS
+========================================================= */
+
+async function acceptOrder(orderId) {
+    if (!confirm("Accept order #" + orderId + "?")) return;
+    await changeStatus(orderId, "Accepted");
+}
+
+async function declineOrder(orderId) {
+    if (!confirm("Decline order #" + orderId + "?")) return;
+    await changeStatus(orderId, "Declined");
+}
+
+function renderHistory(orders) {
+    const list=document.getElementById("historyList");
+    if(!list) return;
+    if(!orders.length){ list.innerHTML='<div class="empty"><h3>No order history</h3><p>All orders will remain here.</p></div>'; return; }
+    list.innerHTML=orders.map(order=>{
+        const status=normalizeStatus(order.status);
+        const date=order.created_at?new Date(order.created_at).toLocaleString():"—";
+        return `<div class="history-row">
+            <div class="order-id">#${escapeHtml(String(order.id))}</div>
+            <div><div class="customer-name">${escapeHtml(order.customer_name||"Customer")}</div><div class="customer-phone">${escapeHtml(order.customer_phone||"")}</div></div>
+            <div class="order-type">${escapeHtml(order.order_type||"—")}</div>
+            <div class="order-total">${formatMoney(order.total)} AFN</div>
+            <div><span class="history-status ${escapeHtml(status)}">${escapeHtml(order.status||"New")}</span></div>
+            <div class="history-date">${escapeHtml(date)}</div>
+        </div>`;
+    }).join("");
+}
+
+function filterHistory(){
+    const q=document.getElementById("searchHistory").value.toLowerCase().trim();
+    renderHistory(q?allOrders.filter(o=>String(o.id).includes(q)||String(o.customer_name||"").toLowerCase().includes(q)||String(o.customer_phone||"").toLowerCase().includes(q)||String(o.status||"").toLowerCase().includes(q)):allOrders);
+}
+
+function scrollToHistory(){ document.getElementById("historySection")?.scrollIntoView({behavior:"smooth"}); }
+
+
+/* =========================================================
+   PRINT RECEIPT
+========================================================= */
+
+function printReceipt(orderId) {
+    const order = allOrders.find(o => Number(o.id) === Number(orderId));
+
+    if (!order) {
+        alert("Order not found.");
+        return;
+    }
+
+    if (normalizeStatus(order.status) !== "accepted") {
+        alert("A receipt can only be printed for an accepted order.");
+        return;
+    }
+
+    const items = order.order_items || [];
+    const date = order.created_at
+        ? new Date(order.created_at).toLocaleString()
+        : "—";
+
+    const itemsHtml = items.length
+        ? items.map(item => {
+            const quantity = Number(item.quantity || 1);
+            const price = Number(item.price || 0);
+            const total = Number(item.total || (price * quantity));
+            return `
+                <tr>
+                    <td>${escapeHtml(item.item_name || "Item")}</td>
+                    <td class="center">${quantity}</td>
+                    <td class="right">${formatMoney(price)} AFN</td>
+                    <td class="right">${formatMoney(total)} AFN</td>
+                </tr>
+            `;
+        }).join("")
+        : `<tr><td colspan="4" class="center">No item details found</td></tr>`;
+
+    const popup = window.open("", "_blank", "width=500,height=700");
+
+    if (!popup) {
+        alert("Please allow pop-ups for this website to print the receipt.");
+        return;
+    }
+
+    popup.document.open();
+    popup.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Ziyafat Receipt #${escapeHtml(String(order.id))}</title>
+            <style>
+                *{box-sizing:border-box;}
+                body{margin:0;padding:25px;font-family:Arial,Helvetica,sans-serif;color:#111;background:#fff;font-size:13px;}
+                .receipt{width:100%;max-width:420px;margin:0 auto;}
+                .brand{text-align:center;font-size:27px;font-weight:700;letter-spacing:3px;margin-bottom:4px;}
+                .subtitle{text-align:center;color:#555;font-size:11px;margin-bottom:18px;}
+                .line{border-top:1px dashed #777;margin:12px 0;}
+                .order-title{text-align:center;font-size:18px;font-weight:700;margin:10px 0;}
+                .meta{font-size:12px;line-height:1.7;}
+                .meta-row{display:flex;justify-content:space-between;gap:15px;}
+                .meta-row span:last-child{text-align:right;font-weight:600;}
+                table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12px;}
+                th{border-bottom:1px solid #222;padding:7px 3px;text-align:left;font-size:10px;text-transform:uppercase;}
+                td{padding:8px 3px;border-bottom:1px solid #ddd;vertical-align:top;}
+                .center{text-align:center;}
+                .right{text-align:right;white-space:nowrap;}
+                .totals{margin-top:12px;}
+                .total-row{display:flex;justify-content:space-between;padding:5px 0;}
+                .grand-total{font-size:18px;font-weight:700;border-top:1px solid #222;margin-top:5px;padding-top:10px;}
+                .status{text-align:center;margin:18px 0;font-weight:700;letter-spacing:1px;}
+                .footer{text-align:center;color:#555;font-size:10px;line-height:1.6;margin-top:20px;}
+                @media print{
+                    body{padding:10px;}
+                    .receipt{max-width:none;}
+                }
+            </style>
+        </head>
+        <body>
+            <div class="receipt">
+                <div class="brand">ZIYAFAT</div>
+                <div class="subtitle">Restaurant &amp; Afghan Cuisine</div>
+                <div class="line"></div>
+                <div class="order-title">ORDER RECEIPT #${escapeHtml(String(order.id))}</div>
+                <div class="meta">
+                    <div class="meta-row"><span>Date</span><span>${escapeHtml(date)}</span></div>
+                    <div class="meta-row"><span>Customer</span><span>${escapeHtml(order.customer_name || "—")}</span></div>
+                    <div class="meta-row"><span>Phone</span><span>${escapeHtml(order.customer_phone || "—")}</span></div>
+                    <div class="meta-row"><span>Order Type</span><span>${escapeHtml(order.order_type || "—")}</span></div>
+                    <div class="meta-row"><span>Payment</span><span>${escapeHtml(order.payment_method || "—")}</span></div>
+                    ${order.delivery_address ? `<div class="meta-row"><span>Address</span><span>${escapeHtml(order.delivery_address)}</span></div>` : ""}
+                </div>
+                <div class="line"></div>
+                <table>
+                    <thead><tr><th>Item</th><th class="center">Qty</th><th class="right">Price</th><th class="right">Total</th></tr></thead>
+                    <tbody>${itemsHtml}</tbody>
+                </table>
+                <div class="totals">
+                    <div class="total-row"><span>Total</span><span>${formatMoney(order.total)} AFN</span></div>
+                    <div class="total-row grand-total"><span>Amount Due</span><span>${formatMoney(order.total)} AFN</span></div>
+                </div>
+                <div class="status">ACCEPTED</div>
+                ${order.notes ? `<div class="line"></div><div class="meta"><strong>Notes:</strong><br>${escapeHtml(order.notes)}</div>` : ""}
+                <div class="footer">Thank you for ordering from Ziyafat.<br>We appreciate your business.</div>
+            </div>
+            <script>
+                window.onload = function(){
+                    setTimeout(function(){ window.print(); }, 250);
+                };
+            <\/script>
+        </body>
+        </html>
+    `);
+    popup.document.close();
+}
+
+
+/* =========================================================
+   VIEW ORDER
+========================================================= */
+
+function viewOrder(orderId) {
+
+    const order =
+        allOrders.find(
+            o => Number(o.id) === Number(orderId)
+        );
+
+
+    if (!order) {
+        return;
+    }
+
+
+    document.getElementById("modalOrderId")
+        .textContent =
+            "#" + order.id;
+
+
+    document.getElementById("modalCustomer")
+        .textContent =
+            order.customer_name || "—";
+
+
+    document.getElementById("modalPhone")
+        .textContent =
+            order.customer_phone || "—";
+
+
+    document.getElementById("modalType")
+        .textContent =
+            order.order_type || "—";
+
+
+    document.getElementById("modalPayment")
+        .textContent =
+            order.payment_method || "—";
+
+
+    document.getElementById("modalAddress")
+        .textContent =
+            order.delivery_address || "Takeaway";
+
+
+    document.getElementById("modalNotes")
+        .textContent =
+            order.notes || "No notes";
+
+
+    document.getElementById("modalTotal")
+        .textContent =
+            formatMoney(order.total) + " AFN";
+
+
+    const items =
+        order.order_items || [];
+
+
+    document.getElementById("modalItems")
+        .innerHTML = items.length
+
+        ? items.map(item => `
+
+            <div class="item-line">
+
+                <span>
+                    ${escapeHtml(
+                        item.item_name || "Item"
+                    )}
+                    × ${escapeHtml(
+                        String(item.quantity || 1)
+                    )}
+                </span>
+
+                <span class="item-price">
+                    ${formatMoney(
+                        item.total ||
+                        (Number(item.price || 0) *
+                         Number(item.quantity || 1))
+                    )}
+                    AFN
+                </span>
+
+            </div>
+
+        `).join("")
+
+        : `
+            <div class="empty">
+                No item details found.
+            </div>
+        `;
+
+
+    document.getElementById("orderModal")
+        .classList.add("show");
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
+
+function closeModal() {
+
+    document.getElementById("orderModal")
+        .classList.remove("show");
+
+}
+
+
+document.getElementById("orderModal")
+    .addEventListener("click", function(e) {
+
+        if (e.target === this) {
+            closeModal();
+        }
+
+    });
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function filterOrders() {
+
+    const search =
+        document.getElementById("searchOrders")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    if (!search) {
+
+        renderOrders(allOrders);
+
+        return;
+    }
+
+
+    const filtered =
+        allOrders.filter(order => {
+
+            return (
+
+                String(order.id)
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                String(order.customer_name || "")
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                String(order.customer_phone || "")
+                    .toLowerCase()
+                    .includes(search)
+
+            );
+
+        });
+
+
+    renderOrders(filtered);
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function normalizeStatus(status) {
+
+    if (!status) {
+        return "new";
+    }
+
+    return String(status)
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "_");
+
+}
+
+
+function formatMoney(value) {
+
+    return Number(value || 0)
+        .toLocaleString("en-US");
+
+}
+
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 3000);
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+function toggleSidebar() {
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+
+function scrollToOrders() {
+
+    document
+        .getElementById("ordersSection")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =========================================================
+   AUTHENTICATION
+========================================================= */
+
+function showDashboard() {
+
+    const loginScreen =
+        document.getElementById("loginScreen");
+
+    if (loginScreen) {
+        loginScreen.style.display = "none";
+    }
+
+    document
+        .querySelectorAll(".dashboard-area")
+        .forEach(element => {
+            element.classList.remove("dashboard-hidden");
+        });
+
+    loadOrders();
+    loadMenuItems();
+}
+
+
+function showLogin() {
+
+    const loginScreen =
+        document.getElementById("loginScreen");
+
+    if (loginScreen) {
+        loginScreen.style.display = "flex";
+    }
+
+    document
+        .querySelectorAll(".dashboard-area")
+        .forEach(element => {
+            element.classList.add("dashboard-hidden");
+        });
+}
+
+
+async function checkAdminAccess() {
+
+    try {
+
+        const {
+            data: { session },
+            error: sessionError
+        } = await supabaseClient.auth.getSession();
+
+        if (sessionError) {
+            throw sessionError;
+        }
+
+        if (!session || !session.user) {
+            showLogin();
+            return;
+        }
+
+        const {
+            data: isAdmin,
+            error: adminError
+        } = await supabaseClient.rpc("is_admin");
+
+        if (adminError) {
+            throw new Error(
+                "Could not verify admin access: " +
+                adminError.message
+            );
+        }
+
+        if (!isAdmin) {
+
+            await supabaseClient.auth.signOut();
+
+            showLogin();
+
+            showLoginError(
+                "This account is not authorized for admin access."
+            );
+
+            return;
+        }
+
+        const adminUser =
+            document.querySelector(".admin-user");
+
+        if (adminUser) {
+            adminUser.innerHTML =
+                escapeHtml(session.user.email || "Administrator") +
+                ' <span id="dbStatus" style="margin-left:12px;color:#777;font-size:10px;">' +
+                "• Connecting..." +
+                "</span>";
+        }
+
+        showDashboard();
+
+    }
+
+    catch (error) {
+
+        console.error("ADMIN AUTH ERROR:", error);
+
+        showLogin();
+
+        showLoginError(
+            error.message ||
+            "Unable to verify your admin account."
+        );
+
+    }
+
+}
+
+
+function showLoginError(message) {
+
+    const errorBox =
+        document.getElementById("loginError");
+
+    if (!errorBox) {
+        return;
+    }
+
+    errorBox.textContent = message;
+    errorBox.classList.add("show");
+
+}
+
+
+function clearLoginError() {
+
+    const errorBox =
+        document.getElementById("loginError");
+
+    if (!errorBox) {
+        return;
+    }
+
+    errorBox.textContent = "";
+    errorBox.classList.remove("show");
+
+}
+
+
+async function handleLogin(event) {
+
+    event.preventDefault();
+
+    clearLoginError();
+
+    const email =
+        document.getElementById("loginEmail").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+    const button =
+        document.getElementById("loginButton");
+
+    button.disabled = true;
+    button.textContent = "Signing In...";
+
+    try {
+
+        const {
+            data,
+            error
+        } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (error) {
+            throw error;
+        }
+
+        if (!data || !data.user) {
+            throw new Error("Login failed. Please try again.");
+        }
+
+        const {
+            data: isAdmin,
+            error: adminError
+        } = await supabaseClient.rpc("is_admin");
+
+        if (adminError) {
+            await supabaseClient.auth.signOut();
+            throw new Error(
+                "Could not verify admin access: " +
+                adminError.message
+            );
+        }
+
+        if (!isAdmin) {
+
+            await supabaseClient.auth.signOut();
+
+            throw new Error(
+                "This account is not authorized for admin access."
+            );
+        }
+
+        document.getElementById("loginForm").reset();
+
+        showDashboard();
+
+    }
+
+    catch (error) {
+
+        console.error("LOGIN ERROR:", error);
+
+        showLoginError(
+            error.message ||
+            "Invalid email or password."
+        );
+
+    }
+
+    finally {
+
+        button.disabled = false;
+        button.textContent = "Sign In";
+
+    }
+
+}
+
+
+async function handleLogout() {
+
+    try {
+
+        await supabaseClient.auth.signOut();
+
+    }
+
+    catch (error) {
+
+        console.error("LOGOUT ERROR:", error);
+
+    }
+
+    showLogin();
+
+    clearLoginError();
+
+}
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+
+    if (event === "SIGNED_OUT" || !session) {
+
+        showLogin();
+
+        return;
+    }
+
+    if (event === "SIGNED_IN") {
+
+        setTimeout(() => {
+            checkAdminAccess();
+        }, 0);
+
+    }
+
+});
+
+
+/* =========================================================
+   START
+========================================================= */
+
+checkAdminAccess();
+
+
+/* =========================================================
+   AUTO REFRESH
+========================================================= */
+
+setInterval(() => {
+
+    supabaseClient.auth.getSession()
+        .then(({ data }) => {
+
+            if (data && data.session) {
+                loadOrders();
+            }
+
+        });
+
+}, 30000);
+
+</script>
+
+</body>
+</html>

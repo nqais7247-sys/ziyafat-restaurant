@@ -1,0 +1,2805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZIYAFAT Restaurant | Authentic Taste of Afghan Hospitality</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+    --black: #070403;
+    --dark: #0d0704;
+    --brown: #170b05;
+    --brown-light: #241208;
+
+    --gold: #b98218;
+    --gold-light: #d9aa43;
+    --gold-bright: #efc45e;
+
+    --cream: #f0dfb4;
+    --text: #d7c49b;
+
+    --border: rgba(203, 151, 39, .7);
+
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans: "Inter", Arial, sans-serif;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: var(--sans);
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   GOLD DECORATIVE LINE
+========================================================= */
+
+.gold-line {
+    width: 45px;
+    height: 1px;
+    background: var(--gold);
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 10px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 72px;
+
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 6%;
+
+    background:
+        linear-gradient(
+            rgba(5,3,2,.98),
+            rgba(11,6,3,.96)
+        );
+
+    border-bottom: 1px solid rgba(207,157,43,.6);
+
+    backdrop-filter: blur(12px);
+}
+
+
+/* REAL-STYLE ZIYAFAT BRAND */
+
+.brand {
+    width: 175px;
+    min-width: 175px;
+
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    position: relative;
+}
+
+.brand-logo {
+    display: block;
+    width: 150px;
+    height: 68px;
+    object-fit: contain;
+    object-position: left center;
+}
+
+
+.nav-links {
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 32px;
+}
+
+.nav-links a {
+    color: #ddc99c;
+
+    font-size: 11px;
+
+    transition: .3s;
+}
+
+.nav-links a:hover {
+    color: var(--gold-bright);
+}
+
+
+.nav-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+.nav-button {
+    height: 34px;
+
+    padding: 0 19px;
+
+    border-radius: 22px;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+
+.order-button {
+    color: var(--gold-bright);
+
+    border: 1px solid var(--gold);
+
+    background: transparent;
+}
+
+.order-button:hover {
+    background: var(--gold);
+
+    color: #130902;
+}
+
+
+.reserve-button {
+    color: #170c03;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d49b2d,
+            #efbd52
+        );
+
+    border: none;
+}
+
+.reserve-button:hover {
+    transform: translateY(-2px);
+}
+
+
+/* cart */
+
+.cart-button {
+    width: 38px;
+    height: 38px;
+
+    position: relative;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--gold-bright);
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+.cart-count {
+    position: absolute;
+
+    right: -2px;
+    top: 1px;
+
+    width: 15px;
+    height: 15px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: var(--gold-bright);
+
+    color: #120802;
+
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    min-height: 710px;
+
+    position: relative;
+
+    padding-top: 72px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    text-align: left;
+
+    overflow: hidden;
+
+    border-bottom: 1px solid var(--gold);
+}
+
+
+/* ACTUAL ZIYAFAT INTERIOR PHOTO */
+
+.hero-image {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            rgba(4, 2, 1, 0.20),
+            rgba(4, 2, 1, 0.60)
+        ),
+        url("ziyafat-hero.png");
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    transform: scale(1.03);
+}
+
+
+/* luxury vignette */
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 15%,
+            rgba(0,0,0,.72) 100%
+        );
+}
+
+
+.hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 680px;
+
+    width: calc(100% - 16%);
+
+    margin-top: 25px;
+
+    margin-left: 8%;
+}
+
+
+.hero-label {
+    color: var(--gold-light);
+
+    font-size: 11px;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 13px;
+}
+
+.hero-label::before,
+.hero-label::after {
+    content: "✦";
+
+    font-size: 7px;
+
+    margin: 0 12px;
+}
+
+
+.hero h1 {
+    font-family: var(--serif);
+
+    font-weight: 400;
+
+    color: #f0d18b;
+
+    font-size: clamp(
+        47px,
+        6vw,
+        78px
+    );
+
+    line-height: .9;
+
+    text-shadow:
+        0 4px 25px rgba(0,0,0,.9);
+}
+
+.hero h1 span {
+    display: block;
+}
+
+
+.hero-subtitle {
+    margin-top: 20px;
+
+    font-family: var(--serif);
+
+    font-style: italic;
+
+    font-size: 18px;
+
+    color: #ead9b5;
+}
+
+
+.hero-buttons {
+    display: flex;
+
+    justify-content: flex-start;
+
+    gap: 14px;
+
+    margin-top: 30px;
+}
+
+
+.gold-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding: 0 27px;
+
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d39a2d,
+            #efc05a
+        );
+
+    color: #170b03;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.gold-button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 35px rgba(210,153,38,.28);
+}
+
+
+.outline-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 42px;
+
+    padding: 0 27px;
+
+    border: 1px solid var(--gold);
+
+    background: rgba(4,2,1,.3);
+
+    color: var(--gold-bright);
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.outline-button:hover {
+    background: var(--gold);
+
+    color: #160a02;
+}
+
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+.section {
+    position: relative;
+
+    border-bottom: 1px solid rgba(190,137,27,.55);
+
+    overflow: hidden;
+}
+
+.section-inner {
+    max-width: 1160px;
+
+    margin: auto;
+
+    padding: 70px 35px;
+}
+
+
+.eyebrow {
+    color: var(--gold-light);
+
+    font-size: 9px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 11px;
+}
+
+.eyebrow::before,
+.eyebrow::after {
+    content: "—";
+
+    margin: 0 7px;
+}
+
+
+.section-title {
+    font-family: var(--serif);
+
+    font-weight: 400;
+
+    color: #efd18b;
+
+    font-size: 43px;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.about {
+    background:
+        linear-gradient(
+            90deg,
+            #0a0503,
+            #1a0b05
+        );
+}
+
+
+.about-inner {
+    min-height: 400px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1.25fr;
+
+    align-items: center;
+
+    gap: 60px;
+}
+
+
+.about-text {
+    max-width: 400px;
+}
+
+
+.about-text h2 {
+    font-family: var(--serif);
+
+    color: #efd08a;
+
+    font-weight: 400;
+
+    font-size: 45px;
+
+    line-height: .93;
+
+    margin-bottom: 20px;
+}
+
+
+.about-text p {
+    color: #cbb994;
+
+    font-size: 11px;
+
+    line-height: 1.8;
+
+    margin-bottom: 15px;
+}
+
+
+/* actual restaurant lobby */
+
+.about-visual {
+    display: grid;
+
+    grid-template-columns: 1fr 100px;
+
+    gap: 24px;
+
+    align-items: center;
+}
+
+
+.about-image {
+    height: 310px;
+
+    overflow: hidden;
+
+    position: relative;
+
+    border-radius:
+        160px 160px 0 0;
+
+    border: 2px solid var(--gold);
+
+    box-shadow:
+        0 0 50px rgba(184,125,23,.18);
+}
+
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    display: block;
+}
+
+
+.about-values {
+    height: 235px;
+
+    border: 1px solid var(--gold);
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-around;
+
+    text-align: center;
+}
+
+
+.value {
+    color: var(--gold-light);
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+}
+
+
+.value-icon {
+    display: block;
+
+    font-size: 19px;
+
+    margin-bottom: 7px;
+}
+
+
+/* =========================================================
+   SIGNATURE FOOD
+========================================================= */
+
+.signature {
+    min-height: 350px;
+
+    background: #0b0502;
+}
+
+
+.signature-image {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(7,3,1,.08),
+            rgba(7,3,1,.82)
+        ),
+        url("https://sale.af/wp-content/uploads/2024/09/458546035_568024339397663_6547181053444408045_n.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+}
+
+
+.signature-inner {
+    position: relative;
+
+    z-index: 2;
+
+    min-height: 350px;
+
+    max-width: 1160px;
+
+    margin: auto;
+
+    padding: 60px 35px;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+}
+
+
+.signature-content {
+    width: 47%;
+}
+
+
+.signature-content h2 {
+    font-family: var(--serif);
+
+    color: #efd18c;
+
+    font-weight: 400;
+
+    font-size: 45px;
+
+    line-height: .9;
+
+    margin-bottom: 18px;
+}
+
+
+.signature-content p {
+    color: #d1c09e;
+
+    font-size: 11px;
+
+    line-height: 1.8;
+
+    max-width: 400px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   MENU
+========================================================= */
+
+.menu-section {
+    background:
+        linear-gradient(
+            #0d0603,
+            #150a04
+        );
+}
+
+
+.menu-heading {
+    text-align: center;
+
+    margin-bottom: 32px;
+}
+
+
+.menu-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    gap: 10px;
+}
+
+
+.menu-card {
+    height: 140px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border: 1px solid var(--gold);
+
+    background: #160a04;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 12px 4px;
+
+    transition: .35s;
+}
+
+
+.menu-card-image {
+    position: absolute;
+
+    inset: 0;
+
+    transition: .5s;
+}
+
+
+.menu-card:nth-child(1) .menu-card-image {
+    background:
+        url("https://sale.af/wp-content/uploads/2024/09/458546035_568024339397663_6547181053444408045_n.jpg")
+        center/cover;
+}
+
+.menu-card:nth-child(2) .menu-card-image {
+    background:
+        url("https://images.mindtrip.ai/restaurants/e57c/3ed2/a9af/9273/9047/0dd4/c8e2/2c11")
+        center/cover;
+}
+
+.menu-card:nth-child(3) .menu-card-image {
+    background:
+        url("https://static.where-e.com/Pakistan/Ziyafat-Restaurant_1f2a8edf87f6177b53e2c5cd2d5ebd74.jpg")
+        center/cover;
+}
+
+.menu-card:nth-child(4) .menu-card-image {
+    background:
+        url("https://www.induscaravan.com/feature/afghanistan/img/food_s15.jpg")
+        center/cover;
+}
+
+.menu-card:nth-child(5) .menu-card-image {
+    background:
+        url("https://sale.af/wp-content/uploads/2024/09/458546035_568024339397663_6547181053444408045_n.jpg")
+        center/cover;
+}
+
+.menu-card:nth-child(6) .menu-card-image {
+    background:
+        url("https://static.where-e.com/Pakistan/Ziyafat-Restaurant_1f2a8edf87f6177b53e2c5cd2d5ebd74.jpg")
+        center/cover;
+}
+
+.menu-card:nth-child(7) .menu-card-image {
+    background:
+        url("https://sale.af/wp-content/uploads/2024/09/458546035_568024339397663_6547181053444408045_n.jpg")
+        center/cover;
+}
+
+
+.menu-card-image::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            transparent 20%,
+            rgba(5,2,1,.93) 92%
+        );
+}
+
+
+.menu-card-content {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.menu-card h3 {
+    font-family: var(--serif);
+
+    font-size: 16px;
+
+    font-weight: 500;
+
+    color: #f2dfae;
+
+    line-height: .95;
+}
+
+
+.menu-arrow {
+    color: var(--gold-bright);
+
+    display: block;
+
+    margin-top: 5px;
+}
+
+
+.menu-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 12px 35px rgba(191,133,26,.2);
+}
+
+.menu-card:hover .menu-card-image {
+    transform: scale(1.1);
+}
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.gallery {
+    background: #0a0503;
+}
+
+
+.gallery-heading {
+    text-align: center;
+
+    margin-bottom: 28px;
+}
+
+
+.gallery-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.2fr 1fr 1fr 1.2fr;
+
+    gap: 9px;
+}
+
+
+.gallery-item {
+    height: 145px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(204,151,38,.75);
+}
+
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition: .5s;
+}
+
+
+.gallery-item:hover img {
+    transform: scale(1.08);
+}
+
+
+/* =========================================================
+   RESERVATION
+========================================================= */
+
+.reservation {
+    position: relative;
+
+    min-height: 205px;
+
+    border-top: 1px solid var(--gold);
+
+    border-bottom: 1px solid var(--gold);
+
+    overflow: hidden;
+}
+
+
+.reservation-image {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            rgba(10,4,1,.45),
+            rgba(10,4,1,.75)
+        ),
+        url("https://images.mindtrip.ai/restaurants/e57c/3ed2/a9af/9273/9047/0dd4/c8e2/2c11");
+
+    background-size: cover;
+
+    background-position: center;
+}
+
+
+.reservation-inner {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 1160px;
+
+    min-height: 205px;
+
+    margin: auto;
+
+    padding: 30px 35px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1.7fr;
+
+    align-items: center;
+
+    gap: 35px;
+}
+
+
+.reservation-title h2 {
+    font-family: var(--serif);
+
+    color: #efd18c;
+
+    font-size: 38px;
+
+    font-weight: 400;
+}
+
+
+.reservation-title p {
+    color: #d8c5a1;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+
+    max-width: 350px;
+
+    margin-top: 8px;
+}
+
+
+.reservation-form {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 8px;
+}
+
+
+.form-field {
+    height: 40px;
+
+    padding: 0 11px;
+
+    border: 1px solid rgba(207,157,42,.75);
+
+    background: rgba(7,3,1,.72);
+
+    color: #e9d6ab;
+
+    outline: none;
+
+    font-size: 9px;
+}
+
+
+.form-field::placeholder {
+    color: #c0ad89;
+}
+
+
+.form-field:focus {
+    border-color: var(--gold-bright);
+}
+
+
+.form-submit {
+    grid-column: span 2;
+
+    height: 40px;
+
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d59b2e,
+            #edbd52
+        );
+
+    color: #150b03;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   PRIVATE EVENTS
+========================================================= */
+
+.events {
+    text-align: center;
+
+    background:
+        linear-gradient(
+            #100704,
+            #080403
+        );
+}
+
+
+.events p {
+    max-width: 650px;
+
+    margin: 20px auto;
+
+    color: #cbb994;
+
+    font-size: 11px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    background: #080402;
+
+    border-top: 1px solid rgba(196,143,30,.55);
+}
+
+
+.footer-inner {
+    max-width: 1160px;
+
+    margin: auto;
+
+    padding: 45px 35px 25px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1.4fr 1.3fr 1fr;
+
+    gap: 30px;
+}
+
+
+.footer-column {
+    border-left: 1px solid rgba(189,136,27,.3);
+
+    padding-left: 27px;
+}
+
+
+.footer-column h4 {
+    color: var(--gold-light);
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 13px;
+}
+
+
+.footer-column p {
+    color: #ad9a76;
+
+    font-size: 9px;
+
+    line-height: 1.8;
+}
+
+
+.socials {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 13px;
+}
+
+
+.social {
+    width: 27px;
+    height: 27px;
+
+    border: 1px solid var(--gold);
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    color: var(--gold-light);
+
+    font-size: 10px;
+
+    transition: .3s;
+}
+
+
+.social:hover {
+    background: var(--gold);
+
+    color: #110702;
+}
+
+
+.copyright {
+    border-top: 1px solid rgba(189,136,27,.18);
+
+    text-align: center;
+
+    padding: 17px;
+
+    color: #78694f;
+
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+.cart-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.75);
+
+    z-index: 3000;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: .3s;
+}
+
+
+.cart-overlay.active {
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+
+.cart-drawer {
+    position: absolute;
+
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    width: min(410px, 90vw);
+
+    background:
+        linear-gradient(
+            #1b0c05,
+            #080302
+        );
+
+    border-left: 1px solid var(--gold);
+
+    padding: 25px;
+
+    transform: translateX(100%);
+
+    transition: .4s;
+}
+
+
+.cart-overlay.active .cart-drawer {
+    transform: translateX(0);
+}
+
+
+.cart-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-bottom: 1px solid rgba(203,153,40,.4);
+
+    padding-bottom: 18px;
+}
+
+
+.cart-header h2 {
+    font-family: var(--serif);
+
+    font-size: 30px;
+
+    color: #efd18c;
+}
+
+
+.close-cart {
+    border: none;
+
+    background: none;
+
+    color: var(--gold);
+
+    font-size: 27px;
+
+    cursor: pointer;
+}
+
+
+.empty-cart {
+    text-align: center;
+
+    color: #9d8b68;
+
+    font-size: 11px;
+
+    line-height: 1.8;
+
+    padding-top: 70px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+.mobile-menu {
+    display: none;
+
+    border: none;
+
+    background: none;
+
+    color: var(--gold-bright);
+
+    font-size: 24px;
+
+    cursor: pointer;
+}
+
+
+@media(max-width:1000px) {
+
+    .nav-links {
+        gap: 17px;
+    }
+
+    .menu-grid {
+        grid-template-columns:
+            repeat(4,1fr);
+    }
+
+    .reservation-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .reservation-form {
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+    .footer-inner {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+
+@media(max-width:760px) {
+    .brand {
+        width: 140px;
+        min-width: 140px;
+    }
+
+    .brand-logo {
+        width: 125px;
+        height: 64px;
+    }
+
+
+    .navbar {
+        height: 67px;
+
+        padding: 0 18px;
+    }
+
+    .brand {
+        width: 150px;
+        min-width: 150px;
+    }
+
+    .brand-name {
+        font-size: 23px;
+    }
+
+    .nav-links,
+    .order-button,
+    .reserve-button {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: block;
+
+        margin-left: auto;
+    }
+
+    .hero {
+        min-height: 620px;
+
+        padding-top: 67px;
+    }
+
+    .hero-content {
+        width: calc(100% - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .hero h1 {
+        font-size: 47px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .about-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .about-visual {
+        grid-template-columns: 1fr;
+    }
+
+    .about-values {
+        height: auto;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+    .signature-content {
+        width: 100%;
+    }
+
+    .signature-image {
+        opacity: .38;
+    }
+
+    .menu-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .gallery-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .reservation-form {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-column {
+        border-left: none;
+
+        border-top: 1px solid rgba(189,136,27,.3);
+
+        padding:
+            20px 0 0;
+    }
+}
+
+
+@media(max-width:450px) {
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .section-inner {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .menu-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .reservation-form {
+        grid-template-columns: 1fr;
+    }
+
+    .form-submit {
+        grid-column: span 1;
+    }
+
+}
+
+
+/* =========================================================
+   WORKING HOMEPAGE CART
+========================================================= */
+.home-cart-list{margin-top:22px;max-height:48vh;overflow-y:auto}
+.home-cart-item{display:grid;grid-template-columns:58px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid rgba(203,153,40,.25)}
+.home-cart-item img{width:58px;height:58px;object-fit:cover;border:1px solid rgba(203,153,40,.7)}
+.home-cart-item h4{font-family:var(--serif);color:#efd18c;font-size:17px;font-weight:500;margin-bottom:4px}
+.home-cart-item p{color:#bba985;font-size:10px}
+.home-cart-controls{display:flex;align-items:center;gap:7px;margin-top:8px}
+.home-cart-controls button{width:25px;height:25px;border:1px solid var(--gold);background:transparent;color:var(--gold-bright);cursor:pointer}
+.home-cart-remove{border:none!important;color:#bda878!important;font-size:16px;background:transparent}
+.home-cart-total{margin-top:20px;padding-top:16px;border-top:1px solid var(--gold);display:flex;justify-content:space-between;color:#efd18c;font-family:var(--serif);font-size:22px}
+.home-cart-checkout{width:100%;margin-top:18px;min-height:46px;border:none;background:linear-gradient(135deg,#d39a2d,#efc05a);color:#170b03;font-size:10px;letter-spacing:1.5px;cursor:pointer;font-weight:600}
+.home-cart-checkout:hover{transform:translateY(-2px)}
+.home-cart-empty{text-align:center;padding:70px 15px;color:#9d8b68;font-size:11px;line-height:1.8}
+@media(max-width:450px){.home-cart-item{grid-template-columns:50px 1fr auto}.home-cart-item img{width:50px;height:50px}}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<header class="navbar">
+
+    <a href="#home" class="brand">
+
+        <img
+            src="ziyafat-logo.png"
+            class="brand-logo"
+            alt="ZIYAFAT Restaurant">
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="menu.html">
+            Menu
+        </a>
+
+        <a href="#about">
+            About
+        </a>
+
+        <a href="#gallery">
+            Gallery
+        </a>
+
+        <a href="#events">
+            Private Events
+        </a>
+
+        <a href="#contact">
+            Contact
+        </a>
+
+    </nav>
+
+
+    <div class="nav-actions">
+
+        <a
+            href="order_supabase.html"
+            class="nav-button order-button">
+
+            ORDER ONLINE
+
+        </a>
+
+        <a
+            href="#reservation"
+            class="nav-button reserve-button">
+
+            RESERVE
+
+        </a>
+
+        <button
+            class="cart-button"
+            onclick="openCart()">
+
+            🛒
+
+            <span
+                class="cart-count"
+                id="cartCount">
+
+                0
+
+            </span>
+
+        </button>
+
+    </div>
+
+
+    <button
+        class="mobile-menu"
+        onclick="toggleMobileMenu()">
+
+        ☰
+
+    </button>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section
+    class="hero"
+    id="home">
+
+    <div class="hero-image"></div>
+
+
+    <div class="hero-content">
+
+        <div class="hero-label">
+            ZIYAFAT
+        </div>
+
+        <h1>
+
+            <span>
+                AUTHENTIC TASTE
+            </span>
+
+            <span>
+                OF AFGHAN
+            </span>
+
+            <span>
+                HOSPITALITY
+            </span>
+
+        </h1>
+
+        <p class="hero-subtitle">
+
+            Where tradition meets the art of dining.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="menu.html"
+                class="gold-button">
+
+                EXPLORE MENU
+
+            </a>
+
+            <a
+                href="#reservation"
+                class="outline-button">
+
+                RESERVE A TABLE
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+
+<section
+    class="section about"
+    id="about">
+
+    <div class="section-inner about-inner">
+
+
+        <div class="about-text">
+
+            <div class="eyebrow">
+                OUR STORY
+            </div>
+
+            <h2>
+                A Royal Experience
+                <br>
+                in Every Bite
+            </h2>
+
+            <p>
+                At Ziyafat, we bring together the rich
+                heritage of Afghan cuisine, aromatic spices,
+                traditional recipes and modern culinary artistry.
+            </p>
+
+            <p>
+                From the first bite to the final cup of tea,
+                our goal is simple — to make every guest feel
+                welcomed, valued and at home.
+            </p>
+
+            <a
+                href="#contact"
+                class="gold-button">
+
+                LEARN MORE
+
+            </a>
+
+        </div>
+
+
+        <div class="about-visual">
+
+            <div class="about-image">
+
+                <img
+                    src="https://static.where-e.com/Pakistan/Ziyafat-Restaurant_1f2a8edf87f6177b53e2c5cd2d5ebd74.jpg"
+                    alt="Ziyafat Restaurant luxury interior">
+
+            </div>
+
+
+            <div class="about-values">
+
+                <div class="value">
+
+                    <span class="value-icon">
+                        🍴
+                    </span>
+
+                    TRADITION
+
+                </div>
+
+
+                <div class="value">
+
+                    <span class="value-icon">
+                        ✦
+                    </span>
+
+                    HOSPITALITY
+
+                </div>
+
+
+                <div class="value">
+
+                    <span class="value-icon">
+                        ❋
+                    </span>
+
+                    TASTE
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SIGNATURE DISH
+===================================================== -->
+
+<section class="section signature">
+
+    <div class="signature-image"></div>
+
+
+    <div class="signature-inner">
+
+        <div class="signature-content">
+
+            <div class="eyebrow">
+                ZIYAFAT SIGNATURE
+            </div>
+
+            <h2>
+                The Art Of
+                <br>
+                Afghan Cuisine
+            </h2>
+
+            <p>
+                Carefully prepared dishes inspired by the
+                culinary traditions of Afghanistan. Rich spices,
+                slow cooking and generations of knowledge come
+                together at Ziyafat.
+            </p>
+
+            <a
+                href="menu.html"
+                class="gold-button">
+
+                VIEW FULL MENU
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MENU
+===================================================== -->
+
+<section
+    class="section menu-section">
+
+    <div class="section-inner">
+
+        <div class="menu-heading">
+
+            <div class="eyebrow">
+                OUR MENU
+            </div>
+
+            <h2 class="section-title">
+                Explore Our Dishes
+            </h2>
+
+        </div>
+
+
+        <div class="menu-grid">
+
+
+            <a
+                href="drinks.html"
+                class="menu-card">
+
+                <div class="menu-card-image"></div>
+
+                <div class="menu-card-content">
+
+                    <h3>
+                        Drinks
+                    </h3>
+
+                    <span class="menu-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="starters.html"
+                class="menu-card">
+
+                <div class="menu-card-image"></div>
+
+                <div class="menu-card-content">
+
+                    <h3>
+                        Appetizers
+                        <br>
+                        & Starters
+                    </h3>
+
+                    <span class="menu-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="salads-soups.html"
+                class="menu-card">
+
+                <div class="menu-card-image"></div>
+
+                <div class="menu-card-content">
+
+                    <h3>
+                        Salads
+                        <br>
+                        & Soups
+                    </h3>
+
+                    <span class="menu-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="main-course.html"
+                class="menu-card">
+
+                <div class="menu-card-image"></div>
+
+                <div class="menu-card-content">
+
+                    <h3>
+                        Main Course
+                    </h3>
+
+                    <span class="menu-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="rice-kabab.html"
+                class="menu-card">
+
+                <div class="menu-card-image"></div>
+
+                <div class="menu-card-content">
+
+                    <h3>
+                        Rice
+                        <br>
+                        & Kabab
+                    </h3>
+
+                    <span class="menu-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="afghan-specialties.html"
+                class="menu-card">
+
+                <div class="menu-card-image"></div>
+
+                <div class="menu-card-content">
+
+                    <h3>
+                        Afghan
+                        <br>
+                        Specialties
+                    </h3>
+
+                    <span class="menu-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="desserts.html"
+                class="menu-card">
+
+                <div class="menu-card-image"></div>
+
+                <div class="menu-card-content">
+
+                    <h3>
+                        Desserts
+                    </h3>
+
+                    <span class="menu-arrow">
+                        →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+        <div style="text-align:center;margin-top:25px;">
+            <a href="menu.html" class="gold-button">
+                ORDER FROM OUR FULL MENU
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     GALLERY
+===================================================== -->
+
+<section
+    class="section gallery"
+    id="gallery">
+
+    <div class="section-inner">
+
+        <div class="gallery-heading">
+
+            <div class="eyebrow">
+                GALLERY
+            </div>
+
+            <h2 class="section-title">
+                A Glimpse Inside
+            </h2>
+
+        </div>
+
+
+        <div class="gallery-grid">
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="https://images.mindtrip.ai/restaurants/e57c/3ed2/a9af/9273/9047/0dd4/c8e2/2c11"
+                    alt="Ziyafat Restaurant interior">
+
+            </div>
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="https://www.induscaravan.com/feature/afghanistan/img/food_s15.jpg"
+                    alt="Ziyafat Restaurant luxury seating">
+
+            </div>
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="https://static.where-e.com/Pakistan/Ziyafat-Restaurant_1f2a8edf87f6177b53e2c5cd2d5ebd74.jpg"
+                    alt="Ziyafat Restaurant lobby">
+
+            </div>
+
+
+            <div class="gallery-item">
+
+                <img
+                    src="https://sale.af/wp-content/uploads/2024/09/458546035_568024339397663_6547181053444408045_n.jpg"
+                    alt="Ziyafat Restaurant food">
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESERVATION
+===================================================== -->
+
+<section
+    class="reservation"
+    id="reservation">
+
+    <div class="reservation-image"></div>
+
+
+    <div class="reservation-inner">
+
+
+        <div class="reservation-title">
+
+            <div class="eyebrow">
+                YOUR TABLE AWAITS
+            </div>
+
+            <h2>
+                Reserve Your Table
+            </h2>
+
+            <p>
+                Join us for an unforgettable dining experience
+                surrounded by authentic Afghan hospitality.
+            </p>
+
+        </div>
+
+
+        <form
+            class="reservation-form"
+            id="reservationForm"
+            onsubmit="reserveTable(event)">
+
+
+            <input
+                class="form-field"
+                id="resName"
+                type="text"
+                placeholder="Name"
+                required>
+
+
+            <input
+                class="form-field"
+                id="resPhone"
+                type="tel"
+                placeholder="Phone"
+                required>
+
+
+            <input
+                class="form-field"
+                id="resDate"
+                type="date"
+                required>
+
+
+            <select
+                class="form-field"
+                id="resGuests"
+                required>
+
+                <option value="">
+                    Guests
+                </option>
+
+                <option>1 Guest</option>
+                <option>2 Guests</option>
+                <option>3 Guests</option>
+                <option>4 Guests</option>
+                <option>5 Guests</option>
+                <option>6+ Guests</option>
+
+            </select>
+
+
+            <select
+                class="form-field"
+                id="resTime"
+                required>
+
+                <option value="">
+                    Time
+                </option>
+
+                <option>12:00 PM</option>
+                <option>1:00 PM</option>
+                <option>2:00 PM</option>
+                <option>5:00 PM</option>
+                <option>6:00 PM</option>
+                <option>7:00 PM</option>
+                <option>8:00 PM</option>
+                <option>9:00 PM</option>
+
+            </select>
+
+
+            <textarea
+                class="form-field"
+                id="resRequest"
+                placeholder="Special request (optional)"
+                rows="2"
+                style="resize:vertical;"></textarea>
+
+
+            <button
+                type="submit"
+                class="form-submit"
+                id="resSubmitBtn">
+
+                BOOK NOW
+
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PRIVATE EVENTS
+===================================================== -->
+
+<section
+    class="section events"
+    id="events">
+
+    <div class="section-inner">
+
+        <div class="eyebrow">
+            PRIVATE EVENTS
+        </div>
+
+        <h2 class="section-title">
+            Celebrate Something Special
+        </h2>
+
+        <p>
+            From intimate family gatherings to elegant
+            celebrations and corporate events, Ziyafat offers
+            a luxurious Afghan dining atmosphere designed to
+            make every occasion memorable.
+        </p>
+
+        <a
+            href="private-events.html"
+            class="gold-button">
+
+            PLAN YOUR EVENT
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer id="contact">
+
+    <div class="footer-inner">
+
+
+        <div class="brand">
+
+            <div class="brand-crown">
+                ♕
+            </div>
+
+            <div class="brand-name">
+                ZIYAFAT
+            </div>
+
+            <div class="brand-sub">
+                RESTAURANT
+            </div>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                CONTACT US
+            </h4>
+
+            <p>
+                City Mall, Share Naw Street
+                <br>
+                Opposite Majid Mall
+                <br>
+                Kabul, Afghanistan
+            </p>
+
+            <p style="margin-top:10px;">
+                ☎ +93 782322222
+            </p>
+
+            <p>
+                ✉ info@ziyafatrestaurants.com
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                HOURS
+            </h4>
+
+            <p>
+                ◷ Open 24/7 Daily
+            </p>
+
+            <p>
+                Dine-In • Delivery • Takeaway
+            </p>
+
+            <a
+                href="#contact"
+                class="outline-button"
+                style="
+                min-height:34px;
+                padding:0 18px;
+                margin-top:12px;
+                ">
+
+                GET DIRECTIONS
+
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                FOLLOW US
+            </h4>
+
+            <div class="socials">
+
+                <a
+                    href="#"
+                    class="social">
+                    f
+                </a>
+
+                <a
+                    href="#"
+                    class="social">
+                    ◎
+                </a>
+
+                <a
+                    href="#"
+                    class="social">
+                    ▶
+                </a>
+
+                <a
+                    href="#"
+                    class="social">
+                    X
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+        © 2026 Ziyafat Restaurant.
+        All Rights Reserved.
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
+     CART
+===================================================== -->
+
+<div
+    class="cart-overlay"
+    id="cartOverlay"
+    onclick="closeCartOutside(event)">
+
+    <div
+        class="cart-drawer"
+        onclick="event.stopPropagation()">
+
+
+        <div class="cart-header">
+
+            <h2>
+                Your Order
+            </h2>
+
+            <button
+                class="close-cart"
+                onclick="closeCart()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div id="homeCartContent"></div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+/* =========================================================
+   SUPABASE CONFIGURATION
+   (same project as menu.html / order_supabase.html / admin.html)
+========================================================= */
+
+const SUPABASE_URL = "https://mwtsmkxygemghblyxdmt.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_YLyhUA9poOS4DxRx-Mo2tQ_2MPiKN0m";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+/* =========================================================
+   CART
+========================================================= */
+
+let homeCart = JSON.parse(localStorage.getItem("ziyafatCart") || "[]");
+
+function saveHomeCart(){
+    localStorage.setItem("ziyafatCart", JSON.stringify(homeCart));
+    updateHomeCartCount();
+}
+
+function updateHomeCartCount(){
+    const count = homeCart.reduce((sum,item)=>sum + Number(item.quantity || 0),0);
+    const el = document.getElementById("cartCount");
+    if(el){
+        el.textContent = count;
+        el.style.display = count > 0 ? "grid" : "none";
+    }
+}
+
+function openCart(){
+    renderHomeCart();
+    document.getElementById("cartOverlay").classList.add("active");
+}
+
+function closeCart(){
+    document.getElementById("cartOverlay").classList.remove("active");
+}
+
+function closeCartOutside(event){
+    if(event.target.id === "cartOverlay") closeCart();
+}
+
+function renderHomeCart(){
+    const container = document.getElementById("homeCartContent");
+    if(!container) return;
+
+    if(!homeCart.length){
+        container.innerHTML = `
+            <div class="home-cart-empty">
+                Your cart is currently empty.
+                <br><br>
+                Explore our menu and add something delicious.
+                <br><br>
+                <a href="menu.html" class="gold-button">EXPLORE MENU</a>
+            </div>
+        `;
+        return;
+    }
+
+    let subtotal = 0;
+
+    container.innerHTML = `
+        <div class="home-cart-list">
+            ${homeCart.map((item,index)=>{
+                const price = Number(item.price) || 0;
+                const quantity = Number(item.quantity) || 1;
+                const total = price * quantity;
+                subtotal += total;
+
+                return `
+                    <div class="home-cart-item">
+                        <img src="${escapeHomeHtml(item.image || "")}"
+                             alt="${escapeHomeHtml(item.name || "Food")}"
+                             onerror="this.style.display='none'">
+                        <div>
+                            <h4>${escapeHomeHtml(item.name)}</h4>
+                            <p>${price.toLocaleString()} AFN each</p>
+                            <div class="home-cart-controls">
+                                <button onclick="changeHomeCartQuantity(${index},-1)">−</button>
+                                <span>${quantity}</span>
+                                <button onclick="changeHomeCartQuantity(${index},1)">+</button>
+                            </div>
+                        </div>
+                        <div style="text-align:right">
+                            <p style="color:#efd18c;font-size:11px">
+                                ${total.toLocaleString()} AFN
+                            </p>
+                            <button class="home-cart-remove"
+                                    onclick="removeHomeCartItem(${index})">×</button>
+                        </div>
+                    </div>
+                `;
+            }).join("")}
+        </div>
+
+        <div class="home-cart-total">
+            <span>Subtotal</span>
+            <span>${subtotal.toLocaleString()} AFN</span>
+        </div>
+
+        <button class="home-cart-checkout" onclick="goHomeCartCheckout()">
+            CONTINUE TO CHECKOUT
+        </button>
+    `;
+}
+
+function changeHomeCartQuantity(index,change){
+    if(!homeCart[index]) return;
+
+    homeCart[index].quantity = Number(homeCart[index].quantity || 1) + change;
+
+    if(homeCart[index].quantity <= 0){
+        homeCart.splice(index,1);
+    }
+
+    saveHomeCart();
+    renderHomeCart();
+}
+
+function removeHomeCartItem(index){
+    homeCart.splice(index,1);
+    saveHomeCart();
+    renderHomeCart();
+}
+
+function goHomeCartCheckout(){
+    if(!homeCart.length){
+        alert("Your cart is empty.");
+        return;
+    }
+
+    saveHomeCart();
+    window.location.href = "order_supabase.html";
+}
+
+function escapeHomeHtml(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+updateHomeCartCount();
+renderHomeCart();
+
+/* =========================================================
+   RESERVATION
+========================================================= */
+
+async function reserveTable(event) {
+
+    event.preventDefault();
+
+    const name = document.getElementById("resName").value.trim();
+    const phone = document.getElementById("resPhone").value.trim();
+    const date = document.getElementById("resDate").value;
+    const guests = document.getElementById("resGuests").value;
+    const time = document.getElementById("resTime").value;
+    const request = document.getElementById("resRequest").value.trim();
+    const button = document.getElementById("resSubmitBtn");
+
+    if (!name || !phone || !date || !guests || !time) {
+        alert("Please fill in all reservation details.");
+        return;
+    }
+
+    const originalText = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = "Booking...";
+
+    try {
+
+        const { error } = await supabaseClient
+            .from("reservations")
+            .insert({
+                customer_name: name,
+                phone: phone,
+                reservation_date: date,
+                reservation_time: time,
+                guests: guests,
+                special_request: request || null
+            });
+
+        if (error) {
+            throw error;
+        }
+
+        alert(
+            "Thank you for choosing Ziyafat Restaurant. " +
+            "Your reservation request has been received. " +
+            "We will confirm shortly by phone."
+        );
+
+        document.getElementById("reservationForm").reset();
+
+    } catch (err) {
+
+        console.error("Reservation error:", err);
+        alert(
+            "We could not save your reservation right now. " +
+            "Please call the restaurant directly, or try again in a moment."
+        );
+
+    } finally {
+
+        button.disabled = false;
+        button.innerHTML = originalText;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+function toggleMobileMenu() {
+
+    let existing =
+        document.getElementById("mobileMenu");
+
+    if (existing) {
+
+        existing.remove();
+
+        return;
+
+    }
+
+
+    const menu =
+        document.createElement("div");
+
+    menu.id = "mobileMenu";
+
+    menu.style.position = "fixed";
+    menu.style.top = "67px";
+    menu.style.left = "0";
+    menu.style.right = "0";
+    menu.style.zIndex = "999";
+
+    menu.style.background = "#100704";
+
+    menu.style.borderBottom =
+        "1px solid #b98218";
+
+    menu.style.padding = "20px";
+
+
+    const links = [
+
+        ["Home", "#home"],
+        ["Menu", "menu.html"],
+        ["About", "#about"],
+        ["Gallery", "#gallery"],
+        ["Private Events", "#events"],
+        ["Contact", "#contact"]
+
+    ];
+
+
+    links.forEach(item => {
+
+        const link =
+            document.createElement("a");
+
+        link.href = item[1];
+
+        link.textContent = item[0];
+
+        link.style.display = "block";
+
+        link.style.padding = "13px";
+
+        link.style.color = "#e4c77f";
+
+        link.style.borderBottom =
+            "1px solid rgba(200,150,40,.15)";
+
+        link.onclick = () => {
+
+            menu.remove();
+
+        };
+
+        menu.appendChild(link);
+
+    });
+
+
+    document.body.appendChild(menu);
+
+}
+
+
+/* =========================================================
+   NAVBAR SCROLL
+========================================================= */
+
+window.addEventListener(
+    "scroll",
+    function() {
+
+        const nav =
+            document.querySelector(".navbar");
+
+        if (window.scrollY > 40) {
+
+            nav.style.background =
+                "rgba(5,3,2,.99)";
+
+        } else {
+
+            nav.style.background =
+                "rgba(5,3,2,.98)";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

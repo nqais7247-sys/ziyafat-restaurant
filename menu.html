@@ -1,0 +1,2529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ziyafat | Menu & Online Ordering</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --gold:#c9a45c;
+    --gold-light:#e7c77f;
+    --dark:#0a0807;
+    --dark2:#120e0b;
+    --brown:#211712;
+    --brown2:#2b1c14;
+    --cream:#f2e8d5;
+    --muted:#a99b8a;
+    --white:#ffffff;
+    --border:rgba(201,164,92,.22);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:
+        radial-gradient(circle at 20% 10%, rgba(201,164,92,.06), transparent 30%),
+        radial-gradient(circle at 80% 40%, rgba(201,164,92,.04), transparent 30%),
+        var(--dark);
+    color:var(--cream);
+    font-family:"DM Sans",sans-serif;
+    overflow-x:hidden;
+}
+
+body.cart-open{
+    overflow:hidden;
+}
+
+/* =========================
+   GLOBAL
+========================= */
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font-family:inherit;
+}
+
+.container{
+    width:min(1200px,92%);
+    margin:auto;
+}
+
+.gold{
+    color:var(--gold-light);
+}
+
+.section-label{
+    text-align:center;
+    color:var(--gold-light);
+    font-size:12px;
+    letter-spacing:5px;
+    text-transform:uppercase;
+    margin-bottom:15px;
+}
+
+.section-title{
+    font-family:"Cinzel",serif;
+    text-align:center;
+    font-size:clamp(32px,5vw,56px);
+    font-weight:500;
+    margin-bottom:18px;
+}
+
+.section-description{
+    max-width:680px;
+    margin:0 auto;
+    text-align:center;
+    color:var(--muted);
+    line-height:1.8;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:78px;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    background:rgba(8,6,5,.94);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid rgba(201,164,92,.15);
+}
+
+.nav-inner{
+    width:min(1300px,92%);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-symbol{
+    color:var(--gold-light);
+    font-size:28px;
+}
+
+.logo-text{
+    font-family:"Cinzel",serif;
+    letter-spacing:4px;
+    font-size:21px;
+    color:#e7c77f;
+}
+
+.logo-sub{
+    display:block;
+    font-size:8px;
+    letter-spacing:3px;
+    color:#9c8970;
+    margin-top:-3px;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:30px;
+}
+
+.nav-links a{
+    font-size:13px;
+    letter-spacing:1.5px;
+    color:#d9cdbc;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:var(--gold-light);
+}
+
+.nav-order{
+    border:1px solid var(--gold);
+    padding:12px 19px;
+    color:var(--gold-light)!important;
+}
+
+.nav-order:hover{
+    background:var(--gold);
+    color:#0b0806!important;
+}
+
+.cart-button{
+    position:relative;
+    border:1px solid rgba(201,164,92,.4);
+    background:rgba(201,164,92,.07);
+    color:var(--gold-light);
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:19px;
+}
+
+.cart-count{
+    position:absolute;
+    top:-5px;
+    right:-5px;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:var(--gold);
+    color:#100c09;
+    font-size:11px;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:78vh;
+    padding-top:78px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(7,5,4,.96) 0%,
+            rgba(7,5,4,.76) 42%,
+            rgba(7,5,4,.35) 100%
+        ),
+        url("https://images.mindtrip.ai/restaurants/e57c/3ed2/a9af/9273/9047/0dd4/c8e2/2c11")
+        center/cover no-repeat;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(to bottom, transparent 75%, var(--dark)),
+        radial-gradient(circle at center, transparent 35%, rgba(0,0,0,.45));
+    pointer-events:none;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    width:min(1200px,92%);
+    margin:auto;
+}
+
+.hero-small{
+    color:var(--gold-light);
+    letter-spacing:6px;
+    font-size:12px;
+    margin-bottom:22px;
+}
+
+.hero h1{
+    font-family:"Cinzel",serif;
+    font-weight:500;
+    line-height:1.1;
+    font-size:clamp(45px,7vw,90px);
+    max-width:800px;
+}
+
+.hero h1 span{
+    color:var(--gold-light);
+}
+
+.hero p{
+    max-width:650px;
+    color:#c2b5a3;
+    line-height:1.8;
+    margin-top:25px;
+    font-size:16px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:15px;
+    margin-top:35px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:15px 25px;
+    border:1px solid var(--gold);
+    cursor:pointer;
+    letter-spacing:1px;
+    font-size:12px;
+    text-transform:uppercase;
+    transition:.3s;
+}
+
+.btn-gold{
+    background:var(--gold);
+    color:#100c09;
+}
+
+.btn-gold:hover{
+    background:var(--gold-light);
+}
+
+.btn-outline{
+    color:var(--gold-light);
+    background:transparent;
+}
+
+.btn-outline:hover{
+    background:rgba(201,164,92,.1);
+}
+
+/* =========================
+   MENU INTRO
+========================= */
+
+.menu-intro{
+    padding:100px 0 55px;
+}
+
+/* =========================
+   CATEGORY BAR
+========================= */
+
+.category-wrapper{
+    position:sticky;
+    top:78px;
+    z-index:500;
+    background:rgba(10,8,7,.95);
+    backdrop-filter:blur(15px);
+    border-top:1px solid rgba(201,164,92,.08);
+    border-bottom:1px solid rgba(201,164,92,.15);
+}
+
+.categories{
+    width:min(1200px,92%);
+    margin:auto;
+    display:flex;
+    gap:10px;
+    padding:18px 0;
+    overflow-x:auto;
+    scrollbar-width:none;
+}
+
+.categories::-webkit-scrollbar{
+    display:none;
+}
+
+.category-btn{
+    flex-shrink:0;
+    padding:11px 17px;
+    background:transparent;
+    color:#b8a895;
+    border:1px solid rgba(201,164,92,.18);
+    cursor:pointer;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    transition:.3s;
+}
+
+.category-btn:hover,
+.category-btn.active{
+    background:var(--gold);
+    color:#100c09;
+    border-color:var(--gold);
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-area{
+    width:min(1200px,92%);
+    margin:35px auto 0;
+    display:flex;
+    justify-content:flex-end;
+}
+
+.search-box{
+    width:min(350px,100%);
+    position:relative;
+}
+
+.search-box input{
+    width:100%;
+    padding:15px 18px;
+    background:#15100d;
+    border:1px solid rgba(201,164,92,.25);
+    color:white;
+    outline:none;
+}
+
+.search-box input:focus{
+    border-color:var(--gold);
+}
+
+.search-box span{
+    position:absolute;
+    right:15px;
+    top:13px;
+    color:var(--gold);
+}
+
+/* =========================
+   MENU SECTIONS
+========================= */
+
+.menu-section{
+    padding:75px 0 30px;
+    scroll-margin-top:155px;
+}
+
+.menu-section-header{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:35px;
+}
+
+.menu-section-header::before,
+.menu-section-header::after{
+    content:"";
+    height:1px;
+    background:linear-gradient(90deg,transparent,var(--border));
+    flex:1;
+}
+
+.menu-section-header::after{
+    background:linear-gradient(90deg,var(--border),transparent);
+}
+
+.menu-section-header h2{
+    font-family:"Cinzel",serif;
+    font-size:29px;
+    font-weight:500;
+    color:var(--gold-light);
+    white-space:nowrap;
+}
+
+.menu-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+/* =========================
+   MENU LOADING / EMPTY STATES
+========================= */
+
+.menu-loading{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--muted);
+    font-family:"DM Sans",sans-serif;
+    letter-spacing:.5px;
+}
+
+.food-card.out-of-stock .food-image::after{
+    content:"Out of Stock";
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+    background:rgba(10,8,7,.72);
+    color:var(--gold-light);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+}
+
+.food-card.out-of-stock .add-button{
+    opacity:.45;
+    cursor:not-allowed;
+    pointer-events:none;
+}
+
+/* =========================
+   FOOD CARD
+========================= */
+
+.food-card{
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.025),transparent),
+        #15100d;
+    border:1px solid rgba(201,164,92,.15);
+    overflow:hidden;
+    transition:.4s;
+    position:relative;
+}
+
+.food-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(201,164,92,.5);
+    box-shadow:0 20px 45px rgba(0,0,0,.35);
+}
+
+.food-image{
+    height:230px;
+    position:relative;
+    overflow:hidden;
+}
+
+.food-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.6s;
+}
+
+.food-card:hover .food-image img{
+    transform:scale(1.07);
+}
+
+.food-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top,rgba(0,0,0,.7),transparent 55%);
+}
+
+.food-tag{
+    position:absolute;
+    top:14px;
+    left:14px;
+    padding:7px 11px;
+    background:rgba(10,8,7,.85);
+    border:1px solid var(--gold);
+    color:var(--gold-light);
+    font-size:9px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.food-content{
+    padding:22px;
+}
+
+.food-top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    align-items:flex-start;
+}
+
+.food-name{
+    font-family:"Cinzel",serif;
+    color:#f1e4d0;
+    font-size:18px;
+    font-weight:500;
+}
+
+.food-price{
+    color:var(--gold-light);
+    font-size:15px;
+    white-space:nowrap;
+    font-weight:600;
+}
+
+.food-description{
+    color:#9e9181;
+    font-size:13px;
+    line-height:1.7;
+    margin:12px 0 20px;
+    min-height:45px;
+}
+
+.add-button{
+    width:100%;
+    padding:12px;
+    background:transparent;
+    color:var(--gold-light);
+    border:1px solid rgba(201,164,92,.45);
+    cursor:pointer;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-size:10px;
+    transition:.3s;
+}
+
+.add-button:hover{
+    background:var(--gold);
+    color:#100c09;
+}
+
+/* =========================
+   ORDER CTA
+========================= */
+
+.order-banner{
+    margin:100px auto;
+    width:min(1200px,92%);
+    min-height:300px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    padding:60px;
+    overflow:hidden;
+    background:
+        linear-gradient(90deg,rgba(9,6,4,.95),rgba(9,6,4,.55)),
+        url("https://sale.af/wp-content/uploads/2024/09/458546035_568024339397663_6547181053444408045_n.jpg")
+        center/cover;
+}
+
+.order-banner-content{
+    position:relative;
+    z-index:2;
+}
+
+.order-banner h2{
+    font-family:"Cinzel",serif;
+    font-size:42px;
+    font-weight:500;
+    max-width:600px;
+}
+
+.order-banner p{
+    color:#b6a895;
+    margin:15px 0 25px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    border-top:1px solid rgba(201,164,92,.15);
+    padding:70px 0 30px;
+    background:#080605;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.5fr 1fr 1fr 1fr;
+    gap:50px;
+}
+
+.footer-logo{
+    font-family:"Cinzel",serif;
+    font-size:25px;
+    letter-spacing:5px;
+    color:var(--gold-light);
+}
+
+.footer-text{
+    color:#817466;
+    line-height:1.8;
+    margin-top:15px;
+    max-width:350px;
+    font-size:13px;
+}
+
+.footer-title{
+    color:var(--gold-light);
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:20px;
+}
+
+.footer-links{
+    display:flex;
+    flex-direction:column;
+    gap:11px;
+}
+
+.footer-links a{
+    color:#827668;
+    font-size:13px;
+    transition:.3s;
+}
+
+.footer-links a:hover{
+    color:var(--gold-light);
+}
+
+.footer-bottom{
+    margin-top:55px;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.06);
+    display:flex;
+    justify-content:space-between;
+    color:#62574c;
+    font-size:11px;
+}
+
+/* =========================
+   CART DRAWER
+========================= */
+
+.cart-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    z-index:1999;
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+}
+
+.cart-overlay.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.cart-drawer{
+    position:fixed;
+    right:0;
+    top:0;
+    height:100vh;
+    width:min(470px,94%);
+    background:#110c09;
+    border-left:1px solid rgba(201,164,92,.3);
+    z-index:2000;
+    transform:translateX(100%);
+    transition:.4s ease;
+    display:flex;
+    flex-direction:column;
+}
+
+.cart-drawer.open{
+    transform:translateX(0);
+}
+
+.cart-header{
+    height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    border-bottom:1px solid rgba(201,164,92,.15);
+}
+
+.cart-header h2{
+    font-family:"Cinzel",serif;
+    font-weight:500;
+    color:var(--gold-light);
+}
+
+.close-cart{
+    width:35px;
+    height:35px;
+    border:1px solid rgba(201,164,92,.3);
+    background:transparent;
+    color:var(--gold-light);
+    cursor:pointer;
+    font-size:20px;
+}
+
+.cart-items{
+    flex:1;
+    overflow-y:auto;
+    padding:20px;
+}
+
+.empty-cart{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#796c5e;
+}
+
+.cart-item{
+    display:flex;
+    gap:13px;
+    padding:15px 0;
+    border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.cart-item-image{
+    width:70px;
+    height:70px;
+    object-fit:cover;
+}
+
+.cart-item-info{
+    flex:1;
+}
+
+.cart-item-name{
+    color:#eadbc5;
+    font-family:"Cinzel",serif;
+    font-size:14px;
+}
+
+.cart-item-price{
+    color:var(--gold-light);
+    font-size:12px;
+    margin-top:5px;
+}
+
+.quantity-controls{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-top:9px;
+}
+
+.qty-btn{
+    width:24px;
+    height:24px;
+    border:1px solid rgba(201,164,92,.3);
+    background:transparent;
+    color:var(--gold-light);
+    cursor:pointer;
+}
+
+.qty-number{
+    font-size:12px;
+}
+
+.remove-item{
+    background:none;
+    border:0;
+    color:#806f60;
+    cursor:pointer;
+    font-size:11px;
+}
+
+.cart-footer{
+    padding:22px;
+    border-top:1px solid rgba(201,164,92,.15);
+}
+
+.subtotal-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:18px;
+    margin-bottom:18px;
+}
+
+.subtotal-row span:last-child{
+    color:var(--gold-light);
+}
+
+.checkout-btn{
+    width:100%;
+    padding:16px;
+    border:0;
+    background:var(--gold);
+    color:#100c09;
+    font-weight:bold;
+    letter-spacing:1px;
+    cursor:pointer;
+}
+
+.checkout-btn:hover{
+    background:var(--gold-light);
+}
+
+/* =========================
+   CHECKOUT MODAL
+========================= */
+
+.checkout-modal{
+    position:fixed;
+    inset:0;
+    z-index:3000;
+    background:rgba(0,0,0,.82);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.checkout-modal.show{
+    display:flex;
+}
+
+.checkout-box{
+    width:min(600px,100%);
+    max-height:90vh;
+    overflow-y:auto;
+    background:#130e0b;
+    border:1px solid rgba(201,164,92,.35);
+    padding:35px;
+    position:relative;
+}
+
+.checkout-box h2{
+    font-family:"Cinzel",serif;
+    color:var(--gold-light);
+    font-weight:500;
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.checkout-box > p{
+    color:#857668;
+    font-size:13px;
+    margin-bottom:25px;
+}
+
+.close-checkout{
+    position:absolute;
+    right:20px;
+    top:20px;
+    border:0;
+    background:none;
+    color:var(--gold-light);
+    font-size:24px;
+    cursor:pointer;
+}
+
+.form-group{
+    margin-bottom:17px;
+}
+
+.form-group label{
+    display:block;
+    color:#ad9d89;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    background:#0c0907;
+    border:1px solid rgba(201,164,92,.2);
+    padding:13px;
+    color:white;
+    outline:none;
+}
+
+.form-group textarea{
+    min-height:80px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    border-color:var(--gold);
+}
+
+.order-type{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.order-type label{
+    padding:15px;
+    border:1px solid rgba(201,164,92,.2);
+    text-align:center;
+    cursor:pointer;
+    color:#a69684;
+    font-size:12px;
+}
+
+.order-type input{
+    display:none;
+}
+
+.order-type input:checked + label{
+    background:rgba(201,164,92,.12);
+    border-color:var(--gold);
+    color:var(--gold-light);
+}
+
+.checkout-total{
+    display:flex;
+    justify-content:space-between;
+    padding:18px 0;
+    margin-top:10px;
+    border-top:1px solid rgba(201,164,92,.15);
+    border-bottom:1px solid rgba(201,164,92,.15);
+    margin-bottom:20px;
+}
+
+.checkout-total strong:last-child{
+    color:var(--gold-light);
+}
+
+.whatsapp-btn{
+    width:100%;
+    padding:16px;
+    background:#b89555;
+    border:0;
+    color:#100c09;
+    cursor:pointer;
+    font-weight:bold;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .menu-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .hero{
+        min-height:70vh;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .navbar{
+        height:68px;
+    }
+
+    .nav-inner{
+        width:94%;
+    }
+
+    .logo-text{
+        font-size:17px;
+        letter-spacing:3px;
+    }
+
+    .logo-sub{
+        font-size:6px;
+    }
+
+    .logo-symbol{
+        font-size:21px;
+    }
+
+    .cart-button{
+        width:40px;
+        height:40px;
+    }
+
+    .hero{
+        padding-top:68px;
+        min-height:78vh;
+    }
+
+    .hero-content{
+        width:90%;
+    }
+
+    .hero-small{
+        font-size:9px;
+        letter-spacing:4px;
+    }
+
+    .hero h1{
+        font-size:44px;
+    }
+
+    .hero p{
+        font-size:14px;
+    }
+
+    .category-wrapper{
+        top:68px;
+    }
+
+    .menu-grid{
+        grid-template-columns:1fr;
+    }
+
+    .menu-section{
+        padding-top:55px;
+    }
+
+    .menu-section-header h2{
+        font-size:21px;
+    }
+
+    .menu-section-header{
+        gap:10px;
+    }
+
+    .food-image{
+        height:245px;
+    }
+
+    .order-banner{
+        padding:35px 25px;
+        margin:70px auto;
+    }
+
+    .order-banner h2{
+        font-size:30px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+        gap:35px;
+    }
+
+    .footer-bottom{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .checkout-box{
+        padding:25px 18px;
+    }
+
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+    <div class="nav-inner">
+
+        <a href="index.html" class="logo">
+
+            <div class="logo-symbol">♛</div>
+
+            <div>
+                <div class="logo-text">ZIYAFAT</div>
+                <span class="logo-sub">RESTAURANT</span>
+            </div>
+
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="index.html">HOME</a>
+            <a href="index.html#about">OUR STORY</a>
+            <a href="#menu">MENU</a>
+            <a href="index.html#gallery">GALLERY</a>
+            <a href="index.html#contact">CONTACT</a>
+
+            <a href="#menu" class="nav-order">ORDER ONLINE</a>
+
+        </nav>
+
+        <button class="cart-button" onclick="openCart()">
+
+            🛒
+
+            <span class="cart-count" id="cartCount">0</span>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-small">
+            ZIYAFAT RESTAURANT · KABUL
+        </div>
+
+        <h1>
+            The Art of
+            <span>Afghan Dining</span>
+        </h1>
+
+        <p>
+            Discover traditional Afghan flavors, beautifully prepared
+            and served with the warmth and elegance of true hospitality.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#menu" class="btn btn-gold">
+                Explore Menu
+            </a>
+
+            <button class="btn btn-outline" onclick="openCart()">
+                View Your Order
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     MENU INTRO
+========================= -->
+
+<section class="menu-intro" id="menu">
+
+    <div class="container">
+
+        <div class="section-label">
+            A Culinary Journey
+        </div>
+
+        <h2 class="section-title">
+            Our <span class="gold">Menu</span>
+        </h2>
+
+        <p class="section-description">
+            From fragrant Kabuli Palaw and charcoal-grilled kebabs
+            to delicate Mantu and Aushak, experience the flavors
+            of Afghanistan at Ziyafat.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CATEGORY NAVIGATION
+========================= -->
+
+<div class="category-wrapper">
+
+    <div class="categories">
+
+        <button class="category-btn active" onclick="scrollToSection('all')">
+            All
+        </button>
+
+        <button class="category-btn" onclick="scrollToSection('drinks')">
+            Drinks
+        </button>
+
+        <button class="category-btn" onclick="scrollToSection('starters')">
+            Starters
+        </button>
+
+        <button class="category-btn" onclick="scrollToSection('salads')">
+            Salads & Soups
+        </button>
+
+        <button class="category-btn" onclick="scrollToSection('main')">
+            Main Course
+        </button>
+
+        <button class="category-btn" onclick="scrollToSection('kabab')">
+            Rice & Kabab
+        </button>
+
+        <button class="category-btn" onclick="scrollToSection('afghan')">
+            Afghan Specialties
+        </button>
+
+        <button class="category-btn" onclick="scrollToSection('bread')">
+            Bread & Sides
+        </button>
+
+        <button class="category-btn" onclick="scrollToSection('dessert')">
+            Desserts
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     SEARCH
+========================= -->
+
+<div class="search-area">
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search our menu..."
+            onkeyup="searchMenu()"
+        >
+
+        <span>⌕</span>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MENU
+========================= -->
+
+<main>
+
+
+<div class="menu-loading" id="menuLoading">
+    Loading the Ziyafat menu...
+</div>
+
+
+<!-- DRINKS -->
+<section class="menu-section" id="drinks">
+    <div class="container">
+        <div class="menu-section-header"><h2>Drinks</h2></div>
+        <div class="menu-grid" id="grid-drinks"></div>
+    </div>
+</section>
+
+<!-- STARTERS -->
+<section class="menu-section" id="starters">
+    <div class="container">
+        <div class="menu-section-header"><h2>Starters</h2></div>
+        <div class="menu-grid" id="grid-starters"></div>
+    </div>
+</section>
+
+<!-- SALADS & SOUPS -->
+<section class="menu-section" id="salads">
+    <div class="container">
+        <div class="menu-section-header"><h2>Salads & Soups</h2></div>
+        <div class="menu-grid" id="grid-salads"></div>
+    </div>
+</section>
+
+<!-- MAIN COURSE -->
+<section class="menu-section" id="main">
+    <div class="container">
+        <div class="menu-section-header"><h2>Main Course</h2></div>
+        <div class="menu-grid" id="grid-main"></div>
+    </div>
+</section>
+
+<!-- RICE & KABAB -->
+<section class="menu-section" id="kabab">
+    <div class="container">
+        <div class="menu-section-header"><h2>Rice & Kabab</h2></div>
+        <div class="menu-grid" id="grid-kabab"></div>
+    </div>
+</section>
+
+<!-- AFGHAN SPECIALTIES -->
+<section class="menu-section" id="afghan">
+    <div class="container">
+        <div class="menu-section-header"><h2>Afghan Specialties</h2></div>
+        <div class="menu-grid" id="grid-afghan"></div>
+    </div>
+</section>
+
+<!-- BREAD & SIDES -->
+<section class="menu-section" id="bread">
+    <div class="container">
+        <div class="menu-section-header"><h2>Bread & Sides</h2></div>
+        <div class="menu-grid" id="grid-bread"></div>
+    </div>
+</section>
+
+<!-- DESSERTS -->
+<section class="menu-section" id="dessert">
+    <div class="container">
+        <div class="menu-section-header"><h2>Desserts</h2></div>
+        <div class="menu-grid" id="grid-dessert"></div>
+    </div>
+</section>
+
+
+</main>
+
+
+<!-- =========================
+     ORDER BANNER
+========================= -->
+
+<section class="order-banner">
+
+    <div class="order-banner-content">
+
+        <div class="section-label" style="text-align:left;">
+            Ziyafat Delivery
+        </div>
+
+        <h2>
+            Afghan Flavors,
+            Delivered to Your Door.
+        </h2>
+
+        <p>
+            Select your favorite dishes and send your order directly
+            to our restaurant.
+        </p>
+
+        <button class="btn btn-gold" onclick="openCart()">
+            Review My Order
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div>
+
+                <div class="footer-logo">
+                    ZIYAFAT
+                </div>
+
+                <p class="footer-text">
+                    Authentic Taste of Afghan Hospitality.
+                    We serve food, harmony, and laughter
+                    in the heart of Kabul.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <div class="footer-title">
+                    Explore
+                </div>
+
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="index.html#about">Our Story</a>
+                    <a href="#menu">Menu</a>
+                    <a href="index.html#gallery">Gallery</a>
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <div class="footer-title">
+                    Restaurant
+                </div>
+
+                <div class="footer-links">
+                    <a href="#drinks">Drinks</a>
+                    <a href="#starters">Starters</a>
+                    <a href="#main">Main Course</a>
+                    <a href="#afghan">Afghan Specialties</a>
+                    <a href="#dessert">Desserts</a>
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <div class="footer-title">
+                    Contact
+                </div>
+
+                <div class="footer-links">
+
+                    <a href="#">
+                        City Mall, Share Naw Street
+                    </a>
+
+                    <a href="tel:+93782322222">
+                        +93 782 322 222
+                    </a>
+
+                    <a href="mailto:info@ziyafatrestaurants.com">
+                        info@ziyafatrestaurants.com
+                    </a>
+
+                    <a href="#">
+                        Open 24/7
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Ziyafat Restaurant. All Rights Reserved.
+            </span>
+
+            <span>
+                Authentic Taste of Afghan Hospitality
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================
+     CART OVERLAY
+========================= -->
+
+<div
+    class="cart-overlay"
+    id="cartOverlay"
+    onclick="closeCart()">
+</div>
+
+
+<!-- =========================
+     CART DRAWER
+========================= -->
+
+<aside class="cart-drawer" id="cartDrawer">
+
+    <div class="cart-header">
+
+        <h2>Your Order</h2>
+
+        <button class="close-cart" onclick="closeCart()">
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="cart-items" id="cartItems">
+
+        <div class="empty-cart">
+
+            <div>
+
+                <div style="font-size:40px;margin-bottom:15px;">
+                    🛒
+                </div>
+
+                <p>Your order is empty.</p>
+
+                <p style="font-size:12px;margin-top:7px;">
+                    Add something delicious from our menu.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="cart-footer">
+
+        <div class="subtotal-row">
+
+            <span>
+                Subtotal
+            </span>
+
+            <span id="cartSubtotal">
+                AFN 0
+            </span>
+
+        </div>
+
+        <a
+    href="order_supabase.html"
+    class="checkout-btn"
+    onclick="goToCheckout(event)">
+    Continue to Checkout
+</a>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     CHECKOUT MODAL
+========================= -->
+
+<div class="checkout-modal" id="checkoutModal">
+
+    <div class="checkout-box">
+
+        <button
+            class="close-checkout"
+            onclick="closeCheckout()">
+            ×
+        </button>
+
+        <h2>
+            Complete Your Order
+        </h2>
+
+        <p>
+            Enter your information and send your order to Ziyafat.
+        </p>
+
+
+        <div class="order-type">
+
+            <input
+                type="radio"
+                name="orderType"
+                id="delivery"
+                value="Delivery"
+                checked>
+
+            <label for="delivery">
+                🚗 Delivery
+            </label>
+
+
+            <input
+                type="radio"
+                name="orderType"
+                id="takeaway"
+                value="Takeaway">
+
+            <label for="takeaway">
+                🥡 Takeaway
+            </label>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Your Name
+            </label>
+
+            <input
+                type="text"
+                id="customerName"
+                placeholder="Enter your name">
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Phone Number
+            </label>
+
+            <input
+                type="tel"
+                id="customerPhone"
+                placeholder="07X XXX XXXX">
+
+        </div>
+
+
+        <div class="form-group" id="addressGroup">
+
+            <label>
+                Delivery Address
+            </label>
+
+            <textarea
+                id="customerAddress"
+                placeholder="Enter your delivery address"></textarea>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Additional Notes
+            </label>
+
+            <textarea
+                id="customerNotes"
+                placeholder="Anything else we should know?"></textarea>
+
+        </div>
+
+
+        <div class="checkout-total">
+
+            <strong>
+                Total
+            </strong>
+
+            <strong id="checkoutTotal">
+                AFN 0
+            </strong>
+
+        </div>
+
+
+        <button
+            class="whatsapp-btn"
+            onclick="sendWhatsAppOrder()">
+
+            Send Order via WhatsApp
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   SUPABASE CONFIGURATION
+========================================== */
+
+const SUPABASE_URL = "https://mwtsmkxygemghblyxdmt.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_YLyhUA9poOS4DxRx-Mo2tQ_2MPiKN0m";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+/* ==========================================
+   MENU DATA
+   Every dish comes from the menu_items table —
+   nothing is hardcoded here anymore. Each
+   Supabase "category" value maps to one of the
+   grids below (Drinks groups three categories).
+========================================== */
+
+const CATEGORY_TO_GRID = {
+    "Cold Drinks":        "grid-drinks",
+    "Hot Drinks":         "grid-drinks",
+    "Mocktails":          "grid-drinks",
+    "Starters":           "grid-starters",
+    "Salads & Soups":     "grid-salads",
+    "Main Course":        "grid-main",
+    "Rice & Kabab":       "grid-kabab",
+    "Afghan Specialties": "grid-afghan",
+    "Bread & Sides":      "grid-bread",
+    "Desserts":           "grid-dessert"
+};
+
+let allMenuItems = [];
+
+async function loadMenu(){
+
+    const loadingEl = document.getElementById("menuLoading");
+
+    try{
+
+        const { data, error } = await supabaseClient
+            .from("menu_items")
+            .select("*")
+            .order("category", { ascending: true })
+            .order("name", { ascending: true });
+
+        if(error){
+            throw error;
+        }
+
+        allMenuItems = data || [];
+        renderMenu(allMenuItems);
+
+        if(loadingEl){
+            loadingEl.style.display = "none";
+        }
+
+    }catch(err){
+
+        console.error("Could not load menu:", err);
+
+        if(loadingEl){
+            loadingEl.innerHTML =
+                "We could not load the menu right now. Please refresh the page.";
+        }
+
+    }
+
+}
+
+function renderMenu(items){
+
+    // Clear every grid first.
+    Object.values(CATEGORY_TO_GRID).forEach(gridId => {
+        const grid = document.getElementById(gridId);
+        if(grid && !grid.dataset.filled){
+            grid.innerHTML = "";
+        }
+    });
+
+    const filledGrids = new Set();
+
+    items.forEach(item => {
+
+        const gridId = CATEGORY_TO_GRID[item.category];
+        const grid = document.getElementById(gridId);
+
+        if(!grid){
+            return;
+        }
+
+        if(!filledGrids.has(gridId)){
+            grid.innerHTML = "";
+            filledGrids.add(gridId);
+        }
+
+        grid.insertAdjacentHTML("beforeend", buildFoodCard(item));
+
+    });
+
+}
+
+function buildFoodCard(item){
+
+    const isAvailable = item.available !== false;
+    const priceLabel = "AFN " + Number(item.price).toLocaleString();
+    const image = item.image_url ||
+        "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=80";
+    const tag = item.featured ? "Signature" : item.category;
+
+    return `
+        <div class="food-card${isAvailable ? "" : " out-of-stock"}" data-name="${escapeHtml(item.name)}">
+            <div class="food-image">
+                <img src="${escapeHtml(image)}" loading="lazy" alt="${escapeHtml(item.name)}">
+                <div class="food-overlay"></div>
+                <span class="food-tag">${escapeHtml(tag)}</span>
+            </div>
+            <div class="food-content">
+                <div class="food-top">
+                    <h3 class="food-name">${escapeHtml(item.name)}</h3>
+                    <span class="food-price">${priceLabel}</span>
+                </div>
+                <p class="food-description">${escapeHtml(item.description || "")}</p>
+                <button class="add-button"
+                    ${isAvailable ? `onclick="addToCart('${escapeJs(item.name)}',${Number(item.price)},this)"` : "disabled"}>
+                    ${isAvailable ? "Add to Order" : "Out of Stock"}
+                </button>
+            </div>
+        </div>
+    `;
+
+}
+
+function escapeHtml(str){
+    return String(str)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;");
+}
+
+function escapeJs(str){
+    return String(str).replace(/'/g,"\\'");
+}
+
+document.addEventListener("DOMContentLoaded", loadMenu);
+
+
+/* ==========================================
+   CART
+========================================== */
+
+let cart = JSON.parse(localStorage.getItem("ziyafatCart") || "[]");
+
+
+function saveCart(){
+
+    localStorage.setItem(
+        "ziyafatCart",
+        JSON.stringify(cart)
+    );
+
+}
+
+
+/* ==========================================
+   ADD ITEM
+========================================== */
+
+function addToCart(name, price, button){
+
+    const image =
+        button.closest(".food-card")
+        .querySelector("img").src;
+
+    const existing =
+        cart.find(item => item.name === name);
+
+    if(existing){
+
+        existing.quantity++;
+
+    }else{
+
+        cart.push({
+            name:name,
+            price:price,
+            quantity:1,
+            image:image
+        });
+
+    }
+
+    updateCart();
+
+    openCart();
+
+}
+
+function goToCheckout(event){
+
+    if(event){
+        event.preventDefault();
+    }
+
+    if(cart.length === 0){
+
+        alert("Please add something to your order.");
+
+        return false;
+
+    }
+
+    saveCart();
+
+    window.location.href = "order_supabase.html";
+
+    return false;
+}
+/* ==========================================
+   UPDATE CART
+========================================== */
+
+function updateCart(){
+
+
+    const cartItems =
+        document.getElementById("cartItems");
+
+    const cartCount =
+        document.getElementById("cartCount");
+
+    const cartSubtotal =
+        document.getElementById("cartSubtotal");
+
+    let totalItems = 0;
+    let subtotal = 0;
+
+    cart.forEach(item => {
+
+        totalItems += item.quantity;
+
+        subtotal +=
+            item.price * item.quantity;
+
+ localStorage.setItem(
+    "ziyafatCart",
+    JSON.stringify(cart));
+
+    });
+
+    saveCart();
+
+    cartCount.textContent = totalItems;
+
+    cartSubtotal.textContent =
+        "AFN " + subtotal.toLocaleString();
+
+
+    if(cart.length === 0){
+
+        cartItems.innerHTML = `
+
+            <div class="empty-cart">
+
+                <div>
+
+                    <div style="font-size:40px;margin-bottom:15px;">
+                        🛒
+                    </div>
+
+                    <p>Your order is empty.</p>
+
+                    <p style="font-size:12px;margin-top:7px;">
+                        Add something delicious from our menu.
+                    </p>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    cartItems.innerHTML = "";
+
+
+    cart.forEach((item,index) => {
+
+        const element =
+            document.createElement("div");
+
+        element.className = "cart-item";
+
+        element.innerHTML = `
+
+            <img
+                class="cart-item-image"
+                src="${item.image}"
+                alt="${item.name}"
+            >
+
+            <div class="cart-item-info">
+
+                <div class="cart-item-name">
+                    ${item.name}
+                </div>
+
+                <div class="cart-item-price">
+                    AFN ${item.price.toLocaleString()}
+                </div>
+
+                <div class="quantity-controls">
+
+                    <button
+                        class="qty-btn"
+                        onclick="changeQuantity(${index},-1)">
+                        −
+                    </button>
+
+                    <span class="qty-number">
+                        ${item.quantity}
+                    </span>
+
+                    <button
+                        class="qty-btn"
+                        onclick="changeQuantity(${index},1)">
+                        +
+                    </button>
+
+                    <button
+                        class="remove-item"
+                        onclick="removeItem(${index})">
+                        Remove
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+        cartItems.appendChild(element);
+
+    });
+    
+
+}
+
+
+/* ==========================================
+   QUANTITY
+========================================== */
+
+function changeQuantity(index,change){
+
+    cart[index].quantity += change;
+
+    if(cart[index].quantity <= 0){
+
+        cart.splice(index,1);
+
+    }
+
+    updateCart();
+
+}
+
+
+/* ==========================================
+   REMOVE
+========================================== */
+
+function removeItem(index){
+
+    cart.splice(index,1);
+
+    updateCart();
+
+}
+
+
+/* ==========================================
+   OPEN CART
+========================================== */
+
+function openCart(){
+
+    document
+        .getElementById("cartDrawer")
+        .classList.add("open");
+
+    document
+        .getElementById("cartOverlay")
+        .classList.add("show");
+
+    document.body.classList.add("cart-open");
+
+}
+
+
+/* ==========================================
+   CLOSE CART
+========================================== */
+
+function closeCart(){
+
+    document
+        .getElementById("cartDrawer")
+        .classList.remove("open");
+
+    document
+        .getElementById("cartOverlay")
+        .classList.remove("show");
+
+    document.body.classList.remove("cart-open");
+
+}
+
+
+/* ==========================================
+   CATEGORY SCROLL
+========================================== */
+
+function scrollToSection(section){
+
+    const buttons =
+        document.querySelectorAll(".category-btn");
+
+    buttons.forEach(btn => {
+
+        btn.classList.remove("active");
+
+    });
+
+
+    event.target.classList.add("active");
+
+
+    if(section === "all"){
+
+        window.scrollTo({
+            top:document.getElementById("menu").offsetTop - 130,
+            behavior:"smooth"
+        });
+
+        return;
+    }
+
+
+    const element =
+        document.getElementById(section);
+
+    if(element){
+
+        element.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+    }
+
+}
+
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+function searchMenu(){
+
+    const query =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const cards =
+        document.querySelectorAll(".food-card");
+
+
+    cards.forEach(card => {
+
+        const name =
+            card.dataset.name.toLowerCase();
+
+        if(name.includes(query)){
+
+            card.style.display = "";
+
+        }else{
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+/* ==========================================
+   CHECKOUT
+========================================== */
+
+function openCheckout(){
+
+    if(cart.length === 0){
+
+        alert("Please add at least one item to your order.");
+
+        return;
+
+    }
+
+    saveCart();
+
+    window.location.href = "order_supabase.html";
+
+}
+
+
+/* ==========================================
+   CLOSE CHECKOUT
+========================================== */
+
+function closeCheckout(){
+
+    document
+        .getElementById("checkoutModal")
+        .classList.remove("show");
+
+}
+
+
+/* ==========================================
+   TOTAL
+========================================== */
+
+function updateCheckoutTotal(){
+
+    let total = 0;
+
+    cart.forEach(item => {
+
+        total +=
+            item.price * item.quantity;
+
+    });
+
+    document
+        .getElementById("checkoutTotal")
+        .textContent =
+        "AFN " + total.toLocaleString();
+
+}
+
+
+/* ==========================================
+   DELIVERY / TAKEAWAY
+========================================== */
+
+document
+    .querySelectorAll('input[name="orderType"]')
+    .forEach(input => {
+
+        input.addEventListener("change", function(){
+
+            const address =
+                document.getElementById("addressGroup");
+
+            if(this.value === "Delivery"){
+
+                address.style.display = "block";
+
+            }else{
+
+                address.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+
+/* ==========================================
+   WHATSAPP ORDER
+========================================== */
+
+function sendWhatsAppOrder(){
+
+    if(cart.length === 0){
+
+        alert("Your order is empty.");
+
+        return;
+
+    }
+
+
+    const name =
+        document
+        .getElementById("customerName")
+        .value
+        .trim();
+
+    const phone =
+        document
+        .getElementById("customerPhone")
+        .value
+        .trim();
+
+    const address =
+        document
+        .getElementById("customerAddress")
+        .value
+        .trim();
+
+    const notes =
+        document
+        .getElementById("customerNotes")
+        .value
+        .trim();
+
+
+    const orderType =
+        document
+        .querySelector(
+            'input[name="orderType"]:checked'
+        ).value;
+
+
+    if(!name || !phone){
+
+        alert(
+            "Please enter your name and phone number."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        orderType === "Delivery" &&
+        !address
+    ){
+
+        alert(
+            "Please enter your delivery address."
+        );
+
+        return;
+
+    }
+
+
+    let total = 0;
+
+    let message =
+        "🍽️ *ZIYAFAT RESTAURANT ORDER*%0A";
+
+    message +=
+        "━━━━━━━━━━━━━━━━━━%0A";
+
+
+    message +=
+        "*Customer:* " +
+        encodeURIComponent(name) +
+        "%0A";
+
+    message +=
+        "*Phone:* " +
+        encodeURIComponent(phone) +
+        "%0A";
+
+    message +=
+        "*Order Type:* " +
+        encodeURIComponent(orderType) +
+        "%0A";
+
+
+    if(orderType === "Delivery"){
+
+        message +=
+            "*Address:* " +
+            encodeURIComponent(address) +
+            "%0A";
+
+    }
+
+
+    message +=
+        "━━━━━━━━━━━━━━━━━━%0A";
+
+    message +=
+        "*ORDER:*%0A";
+
+
+    cart.forEach(item => {
+
+        const itemTotal =
+            item.price * item.quantity;
+
+        total += itemTotal;
+
+        message +=
+            "• " +
+            encodeURIComponent(item.name) +
+            " × " +
+            item.quantity +
+            " — AFN " +
+            itemTotal.toLocaleString() +
+            "%0A";
+
+    });
+
+
+    message +=
+        "━━━━━━━━━━━━━━━━━━%0A";
+
+    message +=
+        "*TOTAL: AFN " +
+        total.toLocaleString() +
+        "*%0A";
+
+
+    if(notes){
+
+        message +=
+            "*Notes:* " +
+            encodeURIComponent(notes) +
+            "%0A";
+
+    }
+
+
+    message +=
+        "%0AThank you — Ziyafat Restaurant";
+
+
+    /*
+       IMPORTANT:
+       This is the restaurant WhatsApp number.
+       Change it here if Ziyafat gives you another
+       official ordering number.
+    */
+
+    const whatsappNumber =
+        "93782322222";
+
+
+    const whatsappURL =
+        "https://wa.me/" +
+        whatsappNumber +
+        "?text=" +
+        message;
+
+
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
+
+}
+
+
+/* ==========================================
+   ESC KEY
+========================================== */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key === "Escape"){
+
+            closeCart();
+            closeCheckout();
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   INITIAL
+========================================== */
+
+saveCart();
+updateCart();
+
+</script>
+
+</body>
+</html>
