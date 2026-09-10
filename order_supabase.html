@@ -59,26 +59,19 @@ html{
 body{
 
     background:
-
-        radial-gradient(
-            circle at 15% 15%,
-            rgba(201,164,92,.07),
-            transparent 28%
+        linear-gradient(
+            rgba(216, 197, 187, 0.1),
+            rgba(195, 181, 174, 0.028)
         ),
-
-        radial-gradient(
-            circle at 85% 75%,
-            rgba(201,164,92,.04),
-            transparent 30%
-        ),
-
-        var(--dark);
+        url("order.png") center center / cover no-repeat fixed;
 
     color:var(--cream);
 
     font-family:"DM Sans",sans-serif;
 
     min-height:100vh;
+
+    background-attachment:fixed;
 
 }
 
@@ -263,16 +256,12 @@ a{
     overflow:hidden;
 
     background:
-
         linear-gradient(
             90deg,
-            rgba(8,6,5,.96),
-            rgba(8,6,5,.65),
-            rgba(8,6,5,.8)
-        ),
-
-        url("https://images.mindtrip.ai/restaurants/e57c/3ed2/a9af/9273/9047/0dd4/c8e2/2c11")
-        center/cover no-repeat;
+            rgba(8,6,5,.72),
+            rgba(8,6,5,.42),
+            rgba(8,6,5,.68)
+        );
 
 }
 
@@ -396,7 +385,7 @@ a{
             transparent
         ),
 
-        #120c09;
+        rgba(18,12,9,.94);
 
     border:1px solid var(--border);
 
@@ -1182,6 +1171,10 @@ footer{
 
 
 @media(max-width:600px){
+
+    body{
+        background-attachment:scroll;
+    }
 
     .navbar{
 

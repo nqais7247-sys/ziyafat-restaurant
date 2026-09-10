@@ -223,7 +223,7 @@ button{
             rgba(7,5,4,.76) 42%,
             rgba(7,5,4,.35) 100%
         ),
-        url("https://images.mindtrip.ai/restaurants/e57c/3ed2/a9af/9273/9047/0dd4/c8e2/2c11")
+        url("menu-hero.png")
         center/cover no-repeat;
 }
 
@@ -1143,7 +1143,7 @@ footer{
             <a href="index.html#gallery">GALLERY</a>
             <a href="index.html#contact">CONTACT</a>
 
-            <a href="#menu" class="nav-order">ORDER ONLINE</a>
+            <a href="order_supabase.html" class="nav-order">ORDER ONLINE</a>
 
         </nav>
 
@@ -1737,10 +1737,10 @@ const supabaseClient = window.supabase.createClient(
 
 /* ==========================================
    MENU DATA
-   Every dish comes from the menu_items table —
-   nothing is hardcoded here anymore. Each
-   Supabase "category" value maps to one of the
-   grids below (Drinks groups three categories).
+   Temporary hardcoded menu data.
+   Later, this can be replaced with the
+   Supabase menu_items data without changing
+   the card design or cart system.
 ========================================== */
 
 const CATEGORY_TO_GRID = {
@@ -1756,50 +1756,73 @@ const CATEGORY_TO_GRID = {
     "Desserts":           "grid-dessert"
 };
 
-let allMenuItems = [];
+const MENU_DATA = [
+    // COLD DRINKS
+    {name:"Fresh Orange Juice", description:"Freshly squeezed oranges served chilled for a bright, refreshing finish.", price:220, category:"Cold Drinks", image_url:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Mango Lassi", description:"Creamy yogurt blended with ripe mango and a touch of cardamom.", price:250, category:"Cold Drinks", image_url:"https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Mint Lemonade", description:"Fresh lemon, cool mint and a light sweetness served over ice.", price:200, category:"Cold Drinks", image_url:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
 
-async function loadMenu(){
+    // HOT DRINKS
+    {name:"Afghan Green Tea", description:"Fragrant green tea traditionally brewed with cardamom and served hot.", price:140, category:"Hot Drinks", image_url:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=900&q=85", available:true, featured:true},
+    {name:"Cardamom Tea", description:"A warming black tea infused with aromatic cardamom.", price:140, category:"Hot Drinks", image_url:"https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Afghan Qahwa", description:"A delicate saffron and cardamom tea with a refined Afghan character.", price:180, category:"Hot Drinks", image_url:"https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
 
+    // MOCKTAILS
+    {name:"Pomegranate Mojito", description:"Pomegranate, fresh mint, lime and sparkling water with a crisp finish.", price:280, category:"Mocktails", image_url:"https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Rose Lemon Fizz", description:"Refreshing lemon and rose flavors topped with sparkling water.", price:260, category:"Mocktails", image_url:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Cucumber Mint Cooler", description:"Cool cucumber, lime and mint blended into a refreshing house cooler.", price:260, category:"Mocktails", image_url:"https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+
+    // STARTERS
+    {name:"Mantu", description:"Steamed dumplings filled with seasoned beef, topped with yogurt and tomato sauce.", price:420, category:"Starters", image_url:"https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&w=900&q=85", available:true, featured:true},
+    {name:"Bolani", description:"Crisp Afghan flatbread filled with seasoned potato, herbs and green onion.", price:280, category:"Starters", image_url:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Chicken Samosa", description:"Golden pastry filled with spiced chicken, herbs and aromatic seasoning.", price:260, category:"Starters", image_url:"https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+
+    // SALADS & SOUPS
+    {name:"Afghan Salad", description:"Crisp tomato, cucumber, onion and herbs finished with fresh lemon.", price:220, category:"Salads & Soups", image_url:"https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Shorba", description:"Traditional Afghan-style soup with tender vegetables, herbs and a rich broth.", price:260, category:"Salads & Soups", image_url:"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Chicken Caesar Salad", description:"Crisp lettuce, grilled chicken, parmesan and creamy house dressing.", price:380, category:"Salads & Soups", image_url:"https://images.unsplash.com/photo-1546793665-c74683f339c1?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+
+    // MAIN COURSE
+    {name:"Qorma-e-Gosht", description:"Slow-cooked beef in a fragrant Afghan onion, tomato and spice sauce.", price:620, category:"Main Course", image_url:"https://images.unsplash.com/photo-1601050690117-94f5f6fa8bd7?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Chicken Qorma", description:"Tender chicken simmered in a rich, aromatic Afghan-style sauce.", price:560, category:"Main Course", image_url:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Lamb Karahi", description:"Tender lamb cooked with tomatoes, peppers and warming spices in a traditional karahi style.", price:680, category:"Main Course", image_url:"https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+
+    // RICE & KABAB
+    {name:"Kabuli Pulao", description:"A signature Afghan rice dish with tender meat, sweet carrots, raisins and almonds.", price:650, category:"Rice & Kabab", image_url:"https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=85", available:true, featured:true},
+    {name:"Lamb Seekh Kabab", description:"Juicy minced lamb kabab seasoned with herbs and traditional spices.", price:620, category:"Rice & Kabab", image_url:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Chicken Tikka Kabab", description:"Char-grilled chicken pieces marinated in yogurt, lemon and Afghan spices.", price:580, category:"Rice & Kabab", image_url:"https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+
+    // AFGHAN SPECIALTIES
+    {name:"Ashak", description:"Afghan dumplings filled with leek and herbs, served with yogurt and meat sauce.", price:480, category:"Afghan Specialties", image_url:"https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Qabuli Gosht", description:"Tender meat served with fragrant Afghan rice, caramelized carrots and raisins.", price:680, category:"Afghan Specialties", image_url:"https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Kadoo Borani", description:"Roasted pumpkin layered with garlic yogurt and a delicate tomato sauce.", price:390, category:"Afghan Specialties", image_url:"https://images.unsplash.com/photo-1572449043416-55f4685c9bb7?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+
+    // BREAD & SIDES
+    {name:"Afghan Naan", description:"Freshly baked Afghan flatbread with a soft center and lightly crisp edges.", price:120, category:"Bread & Sides", image_url:"https://images.unsplash.com/photo-1547058881-aa0edd92aab3?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Garlic Naan", description:"Warm naan brushed with garlic and herbs for extra aroma and flavor.", price:150, category:"Bread & Sides", image_url:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Mast-o-Khiar", description:"Cool yogurt mixed with cucumber, mint and herbs, perfect alongside Afghan dishes.", price:180, category:"Bread & Sides", image_url:"https://images.unsplash.com/photo-1571212515416-fef01fc43637?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+
+    // DESSERTS
+    {name:"Firni", description:"Silky Afghan milk pudding delicately flavored with cardamom and topped with pistachio.", price:220, category:"Desserts", image_url:"https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=85", available:true, featured:true},
+    {name:"Baklava", description:"Layers of crisp pastry, nuts and light syrup with a delicate sweetness.", price:240, category:"Desserts", image_url:"https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=85", available:true, featured:false},
+    {name:"Gulab Jamun", description:"Soft golden milk dumplings soaked in fragrant rose-cardamom syrup.", price:220, category:"Desserts", image_url:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=85", available:true, featured:false}
+];
+
+let allMenuItems = MENU_DATA;
+
+function loadMenu(){
     const loadingEl = document.getElementById("menuLoading");
-
-    try{
-
-        const { data, error } = await supabaseClient
-            .from("menu_items")
-            .select("*")
-            .order("category", { ascending: true })
-            .order("name", { ascending: true });
-
-        if(error){
-            throw error;
-        }
-
-        allMenuItems = data || [];
-        renderMenu(allMenuItems);
-
-        if(loadingEl){
-            loadingEl.style.display = "none";
-        }
-
-    }catch(err){
-
-        console.error("Could not load menu:", err);
-
-        if(loadingEl){
-            loadingEl.innerHTML =
-                "We could not load the menu right now. Please refresh the page.";
-        }
-
+    allMenuItems = MENU_DATA;
+    renderMenu(allMenuItems);
+    if(loadingEl){
+        loadingEl.style.display = "none";
     }
-
 }
 
 function renderMenu(items){
-
-    // Clear every grid first.
     Object.values(CATEGORY_TO_GRID).forEach(gridId => {
         const grid = document.getElementById(gridId);
-        if(grid && !grid.dataset.filled){
+        if(grid){
             grid.innerHTML = "";
         }
     });
@@ -1807,7 +1830,6 @@ function renderMenu(items){
     const filledGrids = new Set();
 
     items.forEach(item => {
-
         const gridId = CATEGORY_TO_GRID[item.category];
         const grid = document.getElementById(gridId);
 
@@ -1821,13 +1843,10 @@ function renderMenu(items){
         }
 
         grid.insertAdjacentHTML("beforeend", buildFoodCard(item));
-
     });
-
 }
 
 function buildFoodCard(item){
-
     const isAvailable = item.available !== false;
     const priceLabel = "AFN " + Number(item.price).toLocaleString();
     const image = item.image_url ||
@@ -1854,7 +1873,6 @@ function buildFoodCard(item){
             </div>
         </div>
     `;
-
 }
 
 function escapeHtml(str){
